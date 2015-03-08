@@ -1,0 +1,18 @@
+@(diretorForm: Form[Diretor])
+@import helper._
+@import helper.twitterBootstrap._
+@import play.api.libs.functional.syntax._
+
+@main("Formulário Diretores") {
+  <h1>Formulário Diretores</h1>
+  @helper.form(action = routes.Diretores.salvar()) {
+  <fieldset>
+	  <legend>Diretor (@diretorForm("id").valueOr("Novo"))</legend>
+	  @helper.inputText(diretorForm("id"), '_label -> "ID")
+	  @helper.inputText(diretorForm("nome"),'_label -> "Nome")
+  </fieldset>
+  <input type="submit" class="btn btn-primary" value="Save">
+  <a class="btn" href="@routes.Diretores.lista(0)">Cancel</a>
+  }
+}
+      

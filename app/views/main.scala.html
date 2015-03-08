@@ -1,0 +1,27 @@
+@(title: String)(content: Html)
+
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>@title</title>
+        <link rel="stylesheet" href="@routes.Assets.at("bootstrap/css/bootstrap.min.css")" media="screen">
+        <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
+        <script type="text/javascript" src="@routes.Assets.at("javascripts/jquery-2.1.3.min.js")"></script>
+        
+    </head>
+    <body class="container">
+    	@if(flash.containsKey("success")){
+		  <div class="alert alert-success">
+		    @flash.get("success")
+		  </div>
+		}
+		
+		@if(flash.containsKey("error")){
+		  <div class="alert alert-danger">
+		    @flash.get("error")
+		  </div>
+		}
+        @content
+    </body>
+</html>
