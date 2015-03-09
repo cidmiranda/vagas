@@ -4,7 +4,7 @@
 # --- !Ups
 
 create table area (
-  id                        bigint not null,
+  id                        bigint auto_increment not null,
   nome                      varchar(255),
   diretor_id                bigint,
   gestor_id                 bigint,
@@ -12,47 +12,47 @@ create table area (
 ;
 
 create table candidato (
-  id                        bigint not null,
+  id                        bigint auto_increment not null,
   nome                      varchar(255),
   cpf                       bigint,
   constraint pk_candidato primary key (id))
 ;
 
 create table cargo (
-  id                        bigint not null,
+  id                        bigint auto_increment not null,
   nome                      varchar(255),
   constraint pk_cargo primary key (id))
 ;
 
 create table cargo_necessario (
-  id                        bigint not null,
+  id                        bigint auto_increment not null,
   nome                      varchar(255),
   constraint pk_cargo_necessario primary key (id))
 ;
 
 create table diretor (
-  id                        bigint not null,
+  id                        bigint auto_increment not null,
   nome                      varchar(255),
   constraint pk_diretor primary key (id))
 ;
 
 create table gestor (
-  id                        bigint not null,
+  id                        bigint auto_increment not null,
   nome                      varchar(255),
   constraint pk_gestor primary key (id))
 ;
 
 create table status (
-  id                        bigint not null,
+  id                        bigint auto_increment not null,
   nome                      varchar(255),
   constraint pk_status primary key (id))
 ;
 
 create table vaga (
-  id                        bigint not null,
-  data_abertura             timestamp,
+  id                        bigint auto_increment not null,
+  data_abertura             datetime,
   remuneracao               double,
-  data_inicio               timestamp,
+  data_inicio               datetime,
   prioridade                integer,
   area_id                   bigint,
   cargo_id                  bigint,
@@ -67,22 +67,6 @@ create table vaga_candidato (
   candidato_id                   bigint not null,
   constraint pk_vaga_candidato primary key (vaga_id, candidato_id))
 ;
-create sequence area_seq;
-
-create sequence candidato_seq;
-
-create sequence cargo_seq;
-
-create sequence cargo_necessario_seq;
-
-create sequence diretor_seq;
-
-create sequence gestor_seq;
-
-create sequence status_seq;
-
-create sequence vaga_seq;
-
 alter table area add constraint fk_area_diretor_1 foreign key (diretor_id) references diretor (id) on delete restrict on update restrict;
 create index ix_area_diretor_1 on area (diretor_id);
 alter table area add constraint fk_area_gestor_2 foreign key (gestor_id) references gestor (id) on delete restrict on update restrict;
@@ -104,41 +88,25 @@ alter table vaga_candidato add constraint fk_vaga_candidato_candidato_02 foreign
 
 # --- !Downs
 
-SET REFERENTIAL_INTEGRITY FALSE;
+SET FOREIGN_KEY_CHECKS=0;
 
-drop table if exists area;
+drop table area;
 
-drop table if exists candidato;
+drop table candidato;
 
-drop table if exists cargo;
+drop table cargo;
 
-drop table if exists cargo_necessario;
+drop table cargo_necessario;
 
-drop table if exists diretor;
+drop table diretor;
 
-drop table if exists gestor;
+drop table gestor;
 
-drop table if exists status;
+drop table status;
 
-drop table if exists vaga;
+drop table vaga;
 
-drop table if exists vaga_candidato;
+drop table vaga_candidato;
 
-SET REFERENTIAL_INTEGRITY TRUE;
-
-drop sequence if exists area_seq;
-
-drop sequence if exists candidato_seq;
-
-drop sequence if exists cargo_seq;
-
-drop sequence if exists cargo_necessario_seq;
-
-drop sequence if exists diretor_seq;
-
-drop sequence if exists gestor_seq;
-
-drop sequence if exists status_seq;
-
-drop sequence if exists vaga_seq;
+SET FOREIGN_KEY_CHECKS=1;
 

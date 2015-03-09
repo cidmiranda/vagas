@@ -1,0 +1,18 @@
+@(gestorForm: Form[Gestor])
+@import helper._
+@import helper.twitterBootstrap._
+@import play.api.libs.functional.syntax._
+
+@main("Formulário Gestores") {
+  <h1>Formulário Gestores</h1>
+  @helper.form(action = routes.Gestores.salvar()) {
+  <fieldset>  
+	  <legend>Gestor (@gestorForm("id").valueOr("Novo"))</legend>
+	  @helper.inputText(gestorForm("id"), '_label -> "ID")
+	  @helper.inputText(gestorForm("nome"),'_label -> "Nome")
+  </fieldset>
+  <input type="submit" class="btn btn-primary" value="Save">
+  <a class="btn" href="@routes.Gestores.lista(0)">Cancel</a>
+  }
+}
+      

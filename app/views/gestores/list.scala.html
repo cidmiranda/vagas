@@ -1,0 +1,49 @@
+@(currentPage: com.avaje.ebean.Page[Gestor])
+@main("Gestores") {
+
+  <h2>Gestores</h2>
+   <script>
+   function del(urlToDelete) {
+      $.ajax({
+        url: urlToDelete,
+        type: 'DELETE',
+        success: function(results) {
+          // Refresh the page
+          location.reload();
+        }
+      });
+   }
+   </script>
+   <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nome</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+    @for(gestor <- currentPage.getList()) {
+      <tr>
+        <td>
+        	<a href="@routes.Gestores.detalhes(gestor)">
+          		@gestor.id
+        	</a>
+        </td>
+        <td>
+        	<a href="@routes.Gestores.detalhes(gestor)">
+				@gestor.nome
+			</a>
+		</td>
+		<td>
+          <a href="@routes.Gestores.detalhes(gestor)" class="btn btn-default"><i class="glyphicon glyphicon-pencil">&nbsp;</i>Alterar</a> 
+          <a onclick="javascript:del('@routes.Gestores.delete(gestor.id)')" class="btn btn-default"><i class="glyphicon glyphicon-trash">&nbsp;</i>Excluir</a> 
+        </td>
+      </tr>
+      }
+    </tbody>
+   </table>
+   
+   <a href="@routes.Gestores.novo()" class="btn btn-default">
+    <i class="glyphicon glyphicon-plus"></i> Novo gestor</a>
+}

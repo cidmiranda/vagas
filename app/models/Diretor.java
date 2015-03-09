@@ -1,5 +1,6 @@
 package models;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import javax.persistence.Entity;
@@ -63,5 +64,14 @@ public class Diretor extends Model implements PathBindable<Diretor>, QueryString
 	public Option<Diretor> bind(String key, Map<String, String[]> data) {
 		return Option.Some(buscarPorId(new Long(data.get("id")[0])));
 	}
+	
+    
+    public static Map<String,String> options() {
+        LinkedHashMap<String,String> options = new LinkedHashMap<String,String>();
+        for(Diretor c: Diretor.find.orderBy("name").findList()) {
+            options.put(c.id.toString(), c.nome);
+        }
+        return options;
+    }
 	
 }

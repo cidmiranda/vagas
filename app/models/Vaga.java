@@ -45,13 +45,9 @@ public class Vaga extends Model {
 	@OneToOne
 	public Status status;
 	
-	
-	
 	public Vaga() {
 		
 	}
-
-
 
 	public Vaga(Long id, Date dataAbertura, Double remuneracao,
 			Date dataInicio, Integer prioridade, List<Candidato> candidatos,

@@ -1,0 +1,61 @@
+@(currentPage: com.avaje.ebean.Page[Area])
+@main("Areas") {
+
+  <h2>Areaes</h2>
+   <script>
+   function del(urlToDelete) {
+      $.ajax({
+        url: urlToDelete,
+        type: 'DELETE',
+        success: function(results) {
+          // Refresh the page
+          location.reload();
+        }
+      });
+   }
+   </script>
+   <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>Diretor</th>
+        <th>Gestor</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+    @for(area <- currentPage.getList()) {
+      <tr>
+        <td>
+        	<a href="@routes.Areas.detalhes(area)">
+          		@area.id
+        	</a>
+        </td>
+        <td>
+        	<a href="@routes.Areas.detalhes(area)">
+				@area.nome
+			</a>
+		</td>
+		<td>
+        	<a href="@routes.Areas.detalhes(area)">
+				@area.diretor.nome
+			</a>
+		</td>
+		<td>
+        	<a href="@routes.Areas.detalhes(area)">
+				@area.gestor.nome
+			</a>
+		</td>
+		<td>
+          <a href="@routes.Areas.detalhes(area)" class="btn btn-default"><i class="glyphicon glyphicon-pencil">&nbsp;</i>Alterar</a> 
+          <a onclick="javascript:del('@routes.Areas.delete(area.id)')" class="btn btn-default"><i class="glyphicon glyphicon-trash">&nbsp;</i>Excluir</a> 
+        </td>
+      </tr>
+      }
+    </tbody>
+   </table>
+   
+   <a href="@routes.Areas.novo()" class="btn btn-default">
+    <i class="glyphicon glyphicon-plus"></i> Novo area</a>
+}

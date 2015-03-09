@@ -1,0 +1,30 @@
+@(areaForm: Form[Area])
+@import helper._
+@import helper.twitterBootstrap._
+@import play.api.libs.functional.syntax._
+
+@main("Formulário Areas") {
+  <h1>Formulário Areas</h1>
+  @helper.form(action = routes.Areas.salvar()) {
+  <fieldset>
+	  <legend>Diretor (@areaForm("id").valueOr("Novo"))</legend>
+	  @helper.inputText(areaForm("id"), '_label -> "ID")
+	  @helper.inputText(areaForm("nome"),'_label -> "Nome")
+	  @select(
+                areaForm("diretor.id"), 
+                options(Diretor.options), 
+                '_label -> "Diretor", '_default -> "-- Escolha um Diretor--",
+                '_showConstraints -> false
+            )
+      @select(
+                areaForm("gestor.id"), 
+                options(Gestor.options), 
+                '_label -> "Gestor", '_default -> "-- Escolha um Gestor--",
+                '_showConstraints -> false
+            )      
+  </fieldset>
+  <input type="submit" class="btn btn-primary" value="Save">
+  <a class="btn" href="@routes.Areas.lista(0)">Cancel</a>
+  }
+}
+      

@@ -14,3 +14,17 @@ GET  	/diretores/novo       controllers.Diretores.novo()
 GET  	/diretores/:id        controllers.Diretores.detalhes(id: models.Diretor)
 POST 	/diretores/           controllers.Diretores.salvar()
 DELETE 	/diretores/:id        controllers.Diretores.delete(id: Long)
+
+# Gestores
+GET  	/gestores/           controllers.Gestores.lista(page: Integer ?= 0)
+GET  	/gestores/novo       controllers.Gestores.novo()
+GET  	/gestores/:id        controllers.Gestores.detalhes(id: models.Gestor)
+POST 	/gestores/           controllers.Gestores.salvar()
+DELETE 	/gestores/:id        controllers.Gestores.delete(id: Long)
+
+# Area
+GET  	/areas/           controllers.Areas.lista(page: Integer ?= 0)
+GET  	/areas/novo       controllers.Areas.novo()
+GET  	/areas/:id        controllers.Areas.detalhes(id: models.Area)
+POST 	/areas/           controllers.Areas.salvar()
+DELETE 	/areas/:id        controllers.Areas.delete(id: Long)
