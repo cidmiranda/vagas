@@ -62,7 +62,7 @@ public class Gestor extends Model implements PathBindable<Gestor>, QueryStringBi
 	}
 	public static Map<String,String> options() {
         LinkedHashMap<String,String> options = new LinkedHashMap<String,String>();
-        for(Gestor c: Gestor.find.orderBy("name").findList()) {
+        for(Gestor c: Gestor.find.orderBy("nome").findList()) {
             options.put(c.id.toString(), c.nome);
         }
         return options;

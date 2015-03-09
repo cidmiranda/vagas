@@ -68,7 +68,7 @@ public class Diretor extends Model implements PathBindable<Diretor>, QueryString
     
     public static Map<String,String> options() {
         LinkedHashMap<String,String> options = new LinkedHashMap<String,String>();
-        for(Diretor c: Diretor.find.orderBy("name").findList()) {
+        for(Diretor c: Diretor.find.orderBy("nome").findList()) {
             options.put(c.id.toString(), c.nome);
         }
         return options;

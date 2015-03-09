@@ -43,7 +43,31 @@
       }
     </tbody>
    </table>
-   
+   <nav>
+	  <ul class="pagination">
+	  	@if(currentPage.hasPrev) {
+	             <li class="prev">
+	                 <a href="@routes.Diretores.lista(currentPage.getPageIndex - 1)">&larr; </a>
+	             </li>
+	         } else {
+	             <li class="prev disabled">
+	                 <a>&larr;</a>
+	             </li>
+	         }
+	         <li class="current">
+	             <a>@currentPage.getDisplayXtoYofZ(" - "," / ")</a>
+	         </li>
+	         @if(currentPage.hasNext) {
+	             <li class="next">
+	                 <a href="@routes.Diretores.lista(currentPage.getPageIndex + 1)"> &rarr;</a>
+	             </li>
+	         } else {
+	             <li class="next disabled">
+	                 <a>&rarr;</a>
+	             </li>
+	         }
+	  </ul>
+	</nav>
    <a href="@routes.Diretores.novo()" class="btn btn-default">
     <i class="glyphicon glyphicon-plus"></i> Novo diretor</a>
 }

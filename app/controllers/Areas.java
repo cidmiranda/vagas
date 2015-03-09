@@ -11,24 +11,24 @@ public class Areas extends Controller{
 
 	private static final Form<Area> areaForm = Form.form(Area.class);
 	public static Result index() {
-		return redirect("");
+		return redirect(routes.Areas.lista(0));
 	  }
 	public static Result lista(Integer page){
-		Page<Area> areaes = Area.buscarTodos(page);
-		return ok();
+		Page<Area> areas = Area.buscarTodos(page);
+		return ok(views.html.areas.list.render(areas));
 	}
 	public static Result novo(){
-		return ok();
+		return ok(views.html.areas.detalhes.render(areaForm));
 	}
 	public static Result detalhes(Area area){
 		Form<Area> filledForm = areaForm.fill(area);
-		return ok();
+		return ok(views.html.areas.detalhes.render(filledForm));
 	}
 	public static Result salvar(){
 		Form<Area> boundForm = areaForm.bindFromRequest();
 		  if(boundForm.hasErrors()) {
 		    flash("error", "Por favor corrija o campo abaixo");
-		    return badRequest();
+		    return badRequest(views.html.areas.detalhes.render(boundForm));
 		  }
 		Area area = boundForm.get();
 		if (area.id == null) {
@@ -38,7 +38,7 @@ public class Areas extends Controller{
 	    }
 		flash("success",
 		        String.format("Area atualizada %s", area));
-		return redirect("");
+		return redirect(routes.Areas.lista(0));
 	}
 	public static Result delete(Long id) {
 	  final Area area = Area.buscarPorId(id);
@@ -46,6 +46,6 @@ public class Areas extends Controller{
 		  return ok();
 	  }
 	  area.delete();
-	  return redirect("");
+	  return redirect(routes.Areas.lista(0));
 	}
 }
