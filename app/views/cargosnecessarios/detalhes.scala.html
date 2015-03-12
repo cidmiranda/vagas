@@ -1,0 +1,18 @@
+@(cargoNecessarioForm: Form[CargoNecessario])
+@import helper._
+@import helper.twitterBootstrap._
+@import play.api.libs.functional.syntax._
+
+@main("Formulário CargoNecessarios") {
+  <h1>Formulário CargoNecessarios</h1>
+  @helper.form(action = routes.CargosNecessarios.salvar()) {
+  <fieldset>
+	  <legend>CargoNecessario (@cargoNecessarioForm("id").valueOr("Novo"))</legend>
+	  @helper.inputText(cargoNecessarioForm("id"), '_label -> "ID")
+	  @helper.inputText(cargoNecessarioForm("nome"),'_label -> "Nome")
+  </fieldset>
+  <input type="submit" class="btn btn-primary" value="Save">
+  <a class="btn" href="@routes.CargosNecessarios.lista(0)">Cancel</a>
+  }
+}
+      

@@ -1,0 +1,73 @@
+@(currentPage: com.avaje.ebean.Page[CargoNecessario])
+@main("Cargos Necessarios") {
+
+  <h2>Cargos Necessarios</h2>
+   <script>
+   function del(urlToDelete) {
+      $.ajax({
+        url: urlToDelete,
+        type: 'DELETE',
+        success: function(results) {
+          // Refresh the page
+          location.reload();
+        }
+      });
+   }
+   </script>
+   <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nome</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+    @for(cargonecessario <- currentPage.getList()) {
+      <tr>
+        <td>
+        	<a href="@routes.CargosNecessarios.detalhes(cargonecessario)">
+          		@cargonecessario.id
+        	</a>
+        </td>
+        <td>
+        	<a href="@routes.CargosNecessarios.detalhes(cargonecessario)">
+				@cargonecessario.nome
+			</a>
+		</td>
+		<td>
+          <a href="@routes.CargosNecessarios.detalhes(cargonecessario)" class="btn btn-default"><i class="glyphicon glyphicon-pencil">&nbsp;</i>Alterar</a> 
+          <a onclick="javascript:del('@routes.CargosNecessarios.delete(cargonecessario.id)')" class="btn btn-default"><i class="glyphicon glyphicon-trash">&nbsp;</i>Excluir</a> 
+        </td>
+      </tr>
+      }
+    </tbody>
+   </table>
+   <nav>
+	  <ul class="pagination">
+	  	@if(currentPage.hasPrev) {
+	             <li class="prev">
+	                 <a href="@routes.CargosNecessarios.lista(currentPage.getPageIndex - 1)">&larr; </a>
+	             </li>
+	         } else {
+	             <li class="prev disabled">
+	                 <a>&larr;</a>
+	             </li>
+	         }
+	         <li class="current">
+	             <a>@currentPage.getDisplayXtoYofZ(" - "," / ")</a>
+	         </li>
+	         @if(currentPage.hasNext) {
+	             <li class="next">
+	                 <a href="@routes.CargosNecessarios.lista(currentPage.getPageIndex + 1)"> &rarr;</a>
+	             </li>
+	         } else {
+	             <li class="next disabled">
+	                 <a>&rarr;</a>
+	             </li>
+	         }
+	  </ul>
+	</nav>
+   <a href="@routes.CargosNecessarios.novo()" class="btn btn-default">
+    <i class="glyphicon glyphicon-plus"></i> Novo cargo</a>
+}

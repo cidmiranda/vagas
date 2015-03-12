@@ -5,6 +5,7 @@ import java.util.Map;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 import play.data.validation.Constraints;
@@ -23,10 +24,10 @@ public class Area  extends Model implements PathBindable<Area>, QueryStringBinda
 	@Constraints.Required
 	public String nome;
 	
-	@OneToOne
+	@ManyToOne
 	public Diretor diretor;
 	
-	@OneToOne
+	@ManyToOne
 	public Gestor gestor;
 	public static Finder<Long, Area> find = new Finder<Long, Area>(Long.class, Area.class);
 	public Area() {}
