@@ -1,46 +1,44 @@
-@(vagaForm: Form[Vaga])
+@(vagacandidatoForm: Form[VagaCandidato])
 @import helper._
 @import helper.twitterBootstrap._
 @import play.api.libs.functional.syntax._
 
-@main("Formulário Vagas") {
-  <h1>Formulário Vagas</h1>
-  @helper.form(action = routes.Vagas.salvar()) {
+@main("Formulário VagaCandidatos") {
+  <h1>Formulário VagaCandidatos</h1>
+  @helper.form(action = routes.VagasCandidatos.salvar()) {
   <fieldset>
-	  <legend>Vagas (@vagaForm("cargo.nome").valueOr("Novo"))</legend>
-	  @helper.inputText(vagaForm("id"), '_label -> "ID")
+	  <legend>VagaCandidatos (@vagacandidatoForm("vaga.nome").valueOr("Novo"))</legend>
+	  @helper.inputText(vagacandidatoForm("id"), '_label -> "ID")
 	  @select(
-                vagaForm("area.id"), 
+                vagacandidatoForm("area.id"), 
                 options(Area.options), 
                 '_label -> "Área", '_default -> "-- Escolha uma Área--",
                 '_showConstraints -> false
             )
       @select(
-                vagaForm("cargo.id"), 
+                vagacandidatoForm("cargo.id"), 
                 options(Cargo.options), 
                 '_label -> "Cargo", '_default -> "-- Escolha um Cargo--",
                 '_showConstraints -> false
             )
       @select(
-                vagaForm("cargoNecessario.id"), 
+                vagacandidatoForm("cargoNecessario.id"), 
                 options(CargoNecessario.options), 
                 '_label -> "Cargo Necessário", '_default -> "-- Escolha um Cargo Necessário--",
                 '_showConstraints -> false
             )
       @select(
-                vagaForm("status.id"), 
+                vagacandidatoForm("status.id"), 
                 options(Situacao.options), 
                 '_label -> "Situação", '_default -> "-- Escolha uma Situação--",
                 '_showConstraints -> false
             )
-      @helper.inputText(vagaForm("prioridade"), '_label -> "Prioridade")       
-      @helper.inputText(vagaForm("remuneracao"), '_label -> "Remuneração")
-      @helper.inputText(vagaForm("dataInicio"), '_label -> "Data Início")
+      @helper.inputText(vagacandidatoForm("prioridade"), '_label -> "Prioridade")       
+      @helper.inputText(vagacandidatoForm("remuneracao"), '_label -> "Remuneração")
+      @helper.inputText(vagacandidatoForm("dataInicio"), '_label -> "Data Início")
   </fieldset>
   <input type="submit" class="btn btn-primary" value="Save">
-  <a class="btn" href="@routes.Vagas.lista(0)">Cancel</a>
+  <a class="btn" href="">Cancel</a>
   }
-  
-  <a class="btn" href="@routes.VagasCandidatos.candidatosPorVaga(vagaForm.get, 0)">Candidatos</a>
 }
       

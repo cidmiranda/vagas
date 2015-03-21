@@ -1,7 +1,9 @@
 package controllers;
 
 import models.Area;
+import models.Candidato;
 import models.Vaga;
+import models.VagaCandidato;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -28,6 +30,7 @@ public class Vagas extends Controller{
 		Page<Vaga> vagas = Vaga.buscarPorArea(area.id, page);
 		return ok(views.html.vagas.list.render(vagas));
 	}
+	
 	public static Result salvar(){
 		Form<Vaga> boundForm = vagaForm.bindFromRequest();
 		  if(boundForm.hasErrors()) {

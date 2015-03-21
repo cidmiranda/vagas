@@ -5,14 +5,14 @@
    <table class="table table-striped">
     <thead>
       <tr>
-        <th>Nome</th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
     @for(area <- currentPage.getList()) {
       <tr>
         <td>
-        	<a href="@routes.Areas.detalhes(area)">
+        	<a href="@routes.Vagas.vagasPorArea(area)">
 				@area.nome
 			</a>
 		</td>

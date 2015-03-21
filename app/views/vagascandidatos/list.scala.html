@@ -1,0 +1,86 @@
+@(currentPage: com.avaje.ebean.Page[VagaCandidato])
+@main("Candidatos") {
+
+  <h2>Candidatos</h2>
+   <script>
+   function del(urlToDelete) {
+      $.ajax({
+        url: urlToDelete,
+        type: 'DELETE',
+        success: function(results) {
+          // Refresh the page
+          location.reload();
+        }
+      });
+   }
+   </script>
+   <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Area</th>
+        <th>Cargo</th>
+        <th>Candidato</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+    @for(vagaCandidatos <- currentPage.getList()) {
+      <tr>
+        <td>
+        	<a href="@routes.Vagas.detalhes(vagaCandidatos.vaga)">
+          		@vagaCandidatos.vaga.id
+        	</a>
+        </td>
+        <td>
+        	<a href="@routes.Vagas.detalhes(vagaCandidatos.vaga)">
+				@vagaCandidatos.vaga.area.nome
+			</a>
+		</td>
+		<td>
+        	<a href="@routes.Vagas.detalhes(vagaCandidatos.vaga)">
+				@vagaCandidatos.vaga.cargo.nome
+			</a>
+		</td>
+		<td>
+        	<a href="@routes.Vagas.detalhes(vagaCandidatos.vaga)">
+				@vagaCandidatos.candidato.nome
+			</a>
+		</td>
+		<td>
+          <a href="@routes.Vagas.detalhes(vagaCandidatos.vaga)" class="btn btn-default"><i class="glyphicon glyphicon-pencil">&nbsp;</i>Alterar</a> 
+          <a onclick="javascript:del('@routes.Vagas.delete(vagaCandidatos.vaga.id)')" class="btn btn-default"><i class="glyphicon glyphicon-trash">&nbsp;</i>Excluir</a> 
+        </td>
+      </tr>
+      }
+    </tbody>
+   </table>
+   <nav>
+	  <ul class="pagination">
+	  	@if(currentPage.hasPrev) {
+	             <li class="prev">
+	                 <a href="@routes.Vagas.lista(currentPage.getPageIndex - 1)">&larr; </a>
+	             </li>
+	         } else {
+	             <li class="prev disabled">
+	                 <a>&larr;</a>
+	             </li>
+	         }
+	         <li class="current">
+	             <a>@currentPage.getDisplayXtoYofZ(" - "," / ")</a>
+	         </li>
+	         @if(currentPage.hasNext) {
+	             <li class="next">
+	                 <a href="@routes.Vagas.lista(currentPage.getPageIndex + 1)"> &rarr;</a>
+	             </li>
+	         } else {
+	             <li class="next disabled">
+	                 <a>&rarr;</a>
+	             </li>
+	         }
+	  </ul>
+	</nav>
+      
+   <a href="@routes.VagasCandidatos.novo()" class="btn btn-default">
+    <i class="glyphicon glyphicon-plus"></i> Novo candidato</a>
+}

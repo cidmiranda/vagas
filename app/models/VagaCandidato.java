@@ -59,6 +59,22 @@ public class VagaCandidato extends Model implements PathBindable<VagaCandidato>,
                 .setFetchAhead(false)
                 .getPage(page);
 	}
+	public static Page<VagaCandidato> buscarPorVaga(Vaga vaga, int page) {
+	    return find.where()
+	    		.eq("vaga.id", vaga.id)
+                .orderBy("dataCriacao desc")
+                .findPagingList(10)
+                .setFetchAhead(false)
+                .getPage(page);
+	}
+	public static Page<VagaCandidato> buscarPorCandidato(Candidato candidato, int page) {
+	    return find.where()
+	    		.eq("candidato.id", candidato.id)
+                .orderBy("dataCriacao desc")
+                .findPagingList(10)
+                .setFetchAhead(false)
+                .getPage(page);
+	}
 	public static VagaCandidato buscarPorIdVaga(Long id) {
 		return find.where().eq("vaga.id", id).findUnique();
 	}
