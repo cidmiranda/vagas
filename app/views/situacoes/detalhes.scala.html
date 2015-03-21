@@ -1,0 +1,18 @@
+@(situacaoForm: Form[Situacao])
+@import helper._
+@import helper.twitterBootstrap._
+@import play.api.libs.functional.syntax._
+
+@main("Formulário Status") {
+  <h1>Formulário Status</h1>
+  @helper.form(action = routes.Situacoes.salvar()) {
+  <fieldset>  
+	  <legend>Status (@situacaoForm("nome").valueOr("Novo"))</legend>
+	  @helper.inputText(situacaoForm("id"), '_label -> "ID")
+	  @helper.inputText(situacaoForm("nome"),'_label -> "Nome")
+  </fieldset>
+  <input type="submit" class="btn btn-primary" value="Save">
+  <a class="btn" href="@routes.Situacoes.lista(0)">Cancel</a>
+  }
+}
+      

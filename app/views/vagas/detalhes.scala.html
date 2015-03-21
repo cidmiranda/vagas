@@ -1,0 +1,44 @@
+@(vagaForm: Form[Vaga])
+@import helper._
+@import helper.twitterBootstrap._
+@import play.api.libs.functional.syntax._
+
+@main("Formulário Vagas") {
+  <h1>Formulário Vagas</h1>
+  @helper.form(action = routes.Vagas.salvar()) {
+  <fieldset>
+	  <legend>Vagas (@vagaForm("cargo.nome").valueOr("Novo"))</legend>
+	  @helper.inputText(vagaForm("id"), '_label -> "ID")
+	  @select(
+                vagaForm("area.id"), 
+                options(Area.options), 
+                '_label -> "Área", '_default -> "-- Escolha uma Área--",
+                '_showConstraints -> false
+            )
+      @select(
+                vagaForm("cargo.id"), 
+                options(Cargo.options), 
+                '_label -> "Cargo", '_default -> "-- Escolha um Cargo--",
+                '_showConstraints -> false
+            )
+      @select(
+                vagaForm("cargoNecessario.id"), 
+                options(CargoNecessario.options), 
+                '_label -> "Cargo Necessário", '_default -> "-- Escolha um Cargo Necessário--",
+                '_showConstraints -> false
+            )
+      @select(
+                vagaForm("status.id"), 
+                options(Situacao.options), 
+                '_label -> "Situação", '_default -> "-- Escolha uma Situação--",
+                '_showConstraints -> false
+            )
+      @helper.inputText(vagaForm("prioridade"), '_label -> "Prioridade")       
+      @helper.inputText(vagaForm("remuneracao"), '_label -> "Remuneração")
+      @helper.inputText(vagaForm("dataInicio"), '_label -> "Data Início")
+  </fieldset>
+  <input type="submit" class="btn btn-primary" value="Save">
+  <a class="btn" href="@routes.Vagas.lista(0)">Cancel</a>
+  }
+}
+      

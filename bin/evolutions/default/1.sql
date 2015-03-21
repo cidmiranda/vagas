@@ -15,6 +15,7 @@ create table candidato (
   id                        bigint auto_increment not null,
   nome                      varchar(255),
   cpf                       bigint,
+  constraint uq_candidato_1 unique (cpf),
   constraint pk_candidato primary key (id))
 ;
 
@@ -42,10 +43,10 @@ create table gestor (
   constraint pk_gestor primary key (id))
 ;
 
-create table status (
+create table situacao (
   id                        bigint auto_increment not null,
   nome                      varchar(255),
-  constraint pk_status primary key (id))
+  constraint pk_situacao primary key (id))
 ;
 
 create table vaga (
@@ -56,9 +57,19 @@ create table vaga (
   prioridade                integer,
   area_id                   bigint,
   cargo_id                  bigint,
-  cargo_necessaio_id        bigint,
+  cargo_necessario_id       bigint,
   status_id                 bigint,
+  data_criacao              datetime,
+  criado_por                varchar(255),
   constraint pk_vaga primary key (id))
+;
+
+create table vaga_candidato (
+  vaga_id                   bigint,
+  candidato_id              bigint,
+  data_criacao              datetime,
+  criado_por                varchar(255),
+  aprovado                  varchar(255))
 ;
 
 
@@ -75,10 +86,14 @@ alter table vaga add constraint fk_vaga_area_3 foreign key (area_id) references 
 create index ix_vaga_area_3 on vaga (area_id);
 alter table vaga add constraint fk_vaga_cargo_4 foreign key (cargo_id) references cargo (id) on delete restrict on update restrict;
 create index ix_vaga_cargo_4 on vaga (cargo_id);
-alter table vaga add constraint fk_vaga_cargoNecessaio_5 foreign key (cargo_necessaio_id) references cargo_necessario (id) on delete restrict on update restrict;
-create index ix_vaga_cargoNecessaio_5 on vaga (cargo_necessaio_id);
-alter table vaga add constraint fk_vaga_status_6 foreign key (status_id) references status (id) on delete restrict on update restrict;
+alter table vaga add constraint fk_vaga_cargoNecessario_5 foreign key (cargo_necessario_id) references cargo_necessario (id) on delete restrict on update restrict;
+create index ix_vaga_cargoNecessario_5 on vaga (cargo_necessario_id);
+alter table vaga add constraint fk_vaga_status_6 foreign key (status_id) references situacao (id) on delete restrict on update restrict;
 create index ix_vaga_status_6 on vaga (status_id);
+alter table vaga_candidato add constraint fk_vaga_candidato_vaga_7 foreign key (vaga_id) references vaga (id) on delete restrict on update restrict;
+create index ix_vaga_candidato_vaga_7 on vaga_candidato (vaga_id);
+alter table vaga_candidato add constraint fk_vaga_candidato_candidato_8 foreign key (candidato_id) references candidato (id) on delete restrict on update restrict;
+create index ix_vaga_candidato_candidato_8 on vaga_candidato (candidato_id);
 
 
 
@@ -94,6 +109,8 @@ drop table area;
 
 drop table candidato;
 
+drop table vaga_candidato;
+
 drop table cargo;
 
 drop table cargo_necessario;
@@ -102,7 +119,7 @@ drop table diretor;
 
 drop table gestor;
 
-drop table status;
+drop table situacao;
 
 drop table vaga;
 

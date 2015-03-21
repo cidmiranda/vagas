@@ -7,7 +7,7 @@
   <h1>Formulário Diretores</h1>
   @helper.form(action = routes.Diretores.salvar()) {
   <fieldset>
-	  <legend>Diretor (@diretorForm("id").valueOr("Novo"))</legend>
+	  <legend>Diretor (@diretorForm("nome").valueOr("Novo"))</legend>
 	  @helper.inputText(diretorForm("id"), '_label -> "ID")
 	  @helper.inputText(diretorForm("nome"),'_label -> "Nome")
   </fieldset>

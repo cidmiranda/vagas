@@ -24,6 +24,10 @@ public class Areas extends Controller{
 		Form<Area> filledForm = areaForm.fill(area);
 		return ok(views.html.areas.detalhes.render(filledForm));
 	}
+	public static Result vagasPorArea(Integer page){
+		Page<Area> areas = Area.buscarTodos(page);
+		return ok(views.html.index.render(areas));
+	}
 	public static Result salvar(){
 		Form<Area> boundForm = areaForm.bindFromRequest();
 		  if(boundForm.hasErrors()) {

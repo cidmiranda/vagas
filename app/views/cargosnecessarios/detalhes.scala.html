@@ -3,11 +3,11 @@
 @import helper.twitterBootstrap._
 @import play.api.libs.functional.syntax._
 
-@main("Formulário CargoNecessarios") {
-  <h1>Formulário CargoNecessarios</h1>
+@main("Formulário Cargo Necessário") {
+  <h1>Formulário Cargo Necessário</h1>
   @helper.form(action = routes.CargosNecessarios.salvar()) {
   <fieldset>
-	  <legend>CargoNecessario (@cargoNecessarioForm("id").valueOr("Novo"))</legend>
+	  <legend>Cargo Necessário (@cargoNecessarioForm("nome").valueOr("Novo"))</legend>
 	  @helper.inputText(cargoNecessarioForm("id"), '_label -> "ID")
 	  @helper.inputText(cargoNecessarioForm("nome"),'_label -> "Nome")
   </fieldset>

@@ -1,7 +1,50 @@
-@(message: String)
-
-@main("Welcome to Play") {
-
-    @play20.welcome(message, style = "Java")
-
+@(currentPage: com.avaje.ebean.Page[Area])
+@main("Vagas por área") {
+  <h2>Vagas por área</h2>
+   
+   <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Nome</th>
+      </tr>
+    </thead>
+    <tbody>
+    @for(area <- currentPage.getList()) {
+      <tr>
+        <td>
+        	<a href="@routes.Areas.detalhes(area)">
+				@area.nome
+			</a>
+		</td>
+      </tr>
+      }
+    </tbody>
+   </table>
+   <nav>
+	  <ul class="pagination">
+	  	@if(currentPage.hasPrev) {
+	             <li class="prev">
+	                 <a href="@routes.Areas.lista(currentPage.getPageIndex - 1)">&larr; </a>
+	             </li>
+	         } else {
+	             <li class="prev disabled">
+	                 <a>&larr;</a>
+	             </li>
+	         }
+	         <li class="current">
+	             <a>@currentPage.getDisplayXtoYofZ(" - "," / ")</a>
+	         </li>
+	         @if(currentPage.hasNext) {
+	             <li class="next">
+	                 <a href="@routes.Areas.lista(currentPage.getPageIndex + 1)"> &rarr;</a>
+	             </li>
+	         } else {
+	             <li class="next disabled">
+	                 <a>&rarr;</a>
+	             </li>
+	         }
+	  </ul>
+	</nav>
+    
 }
+      

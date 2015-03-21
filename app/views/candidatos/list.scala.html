@@ -1,7 +1,7 @@
-@(currentPage: com.avaje.ebean.Page[CargoNecessario])
-@main("Cargos Necessários") {
+@(currentPage: com.avaje.ebean.Page[Candidato])
+@main("Candidatos") {
 
-  <h2>Cargos Necessários</h2>
+  <h2>Candidatos</h2>
    <script>
    function del(urlToDelete) {
       $.ajax({
@@ -19,25 +19,31 @@
       <tr>
         <th>ID</th>
         <th>Nome</th>
+        <th>CPF</th>
         <th></th>
       </tr>
     </thead>
     <tbody>
-    @for(cargonecessario <- currentPage.getList()) {
+    @for(candidato <- currentPage.getList()) {
       <tr>
         <td>
-        	<a href="@routes.CargosNecessarios.detalhes(cargonecessario)">
-          		@cargonecessario.id
+        	<a href="@routes.Candidatos.detalhes(candidato)">
+          		@candidato.id
         	</a>
         </td>
         <td>
-        	<a href="@routes.CargosNecessarios.detalhes(cargonecessario)">
-				@cargonecessario.nome
+        	<a href="@routes.Candidatos.detalhes(candidato)">
+				@candidato.nome
 			</a>
 		</td>
 		<td>
-          <a href="@routes.CargosNecessarios.detalhes(cargonecessario)" class="btn btn-default"><i class="glyphicon glyphicon-pencil">&nbsp;</i>Alterar</a> 
-          <a onclick="javascript:del('@routes.CargosNecessarios.delete(cargonecessario.id)')" class="btn btn-default"><i class="glyphicon glyphicon-trash">&nbsp;</i>Excluir</a> 
+        	<a href="@routes.Candidatos.detalhes(candidato)">
+				@candidato.cpf
+			</a>
+		</td>
+		<td>
+          <a href="@routes.Candidatos.detalhes(candidato)" class="btn btn-default"><i class="glyphicon glyphicon-pencil">&nbsp;</i>Alterar</a> 
+          <a onclick="javascript:del('@routes.Candidatos.delete(candidato.id)')" class="btn btn-default"><i class="glyphicon glyphicon-trash">&nbsp;</i>Excluir</a> 
         </td>
       </tr>
       }
@@ -47,7 +53,7 @@
 	  <ul class="pagination">
 	  	@if(currentPage.hasPrev) {
 	             <li class="prev">
-	                 <a href="@routes.CargosNecessarios.lista(currentPage.getPageIndex - 1)">&larr; </a>
+	                 <a href="@routes.Candidatos.lista(currentPage.getPageIndex - 1)">&larr; </a>
 	             </li>
 	         } else {
 	             <li class="prev disabled">
@@ -59,7 +65,7 @@
 	         </li>
 	         @if(currentPage.hasNext) {
 	             <li class="next">
-	                 <a href="@routes.CargosNecessarios.lista(currentPage.getPageIndex + 1)"> &rarr;</a>
+	                 <a href="@routes.Candidatos.lista(currentPage.getPageIndex + 1)"> &rarr;</a>
 	             </li>
 	         } else {
 	             <li class="next disabled">
@@ -68,6 +74,6 @@
 	         }
 	  </ul>
 	</nav>
-   <a href="@routes.CargosNecessarios.novo()" class="btn btn-default">
-    <i class="glyphicon glyphicon-plus"></i> Novo cargo</a>
+   <a href="@routes.Candidatos.novo()" class="btn btn-default">
+    <i class="glyphicon glyphicon-plus"></i> Novo candidato</a>
 }
