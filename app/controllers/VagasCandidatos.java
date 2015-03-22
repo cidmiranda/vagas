@@ -19,6 +19,10 @@ public class VagasCandidatos extends Controller {
 	public static Result novo(){
 		return ok(views.html.vagascandidatos.detalhes.render(vagaCandidatoForm));
 	}
+	public static Result detalhes(VagaCandidato vagaCandidato){
+		Form<VagaCandidato> filledForm = vagaCandidatoForm.fill(vagaCandidato);
+		return ok(views.html.vagascandidatos.detalhes.render(filledForm));
+	}
 	public static Result salvar(){
 		Form<VagaCandidato> boundForm = vagaCandidatoForm.bindFromRequest();
 		  if(boundForm.hasErrors()) {
@@ -26,13 +30,13 @@ public class VagasCandidatos extends Controller {
 		    return badRequest(views.html.vagascandidatos.detalhes.render(boundForm));
 		  }
 		  VagaCandidato vaga = boundForm.get();
-		if (vaga.candidato.id == null) {
+		if (vaga.id == null) {
 			vaga.save();
 	    } else {
 	    	vaga.update();
 	    }
 		flash("success",
 		        String.format("Vaga atualizada %s", vaga));
-		return redirect("");
+		return redirect(routes.VagasCandidatos.candidatosPorVaga(vaga.vaga,0));
 	}
 }

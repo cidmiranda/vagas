@@ -5,6 +5,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -19,6 +21,10 @@ import play.mvc.QueryStringBindable;
 @Entity
 public class VagaCandidato extends Model implements PathBindable<VagaCandidato>, QueryStringBindable<VagaCandidato>  {
 	public static Finder<Long, VagaCandidato> find = new Finder<Long, VagaCandidato>(Long.class, VagaCandidato.class);
+	
+	@Id
+	@GeneratedValue
+	public Long id;
 	
 	@ManyToOne
 	public Vaga vaga;
@@ -38,8 +44,9 @@ public class VagaCandidato extends Model implements PathBindable<VagaCandidato>,
 		
 	}
 
-	public VagaCandidato(Vaga vaga, Candidato candidato, Date dataCriacao,
+	public VagaCandidato(Long id, Vaga vaga, Candidato candidato, Date dataCriacao,
 			String criadoPor, String aprovado) {
+		this.id = id;
 		this.vaga = vaga;
 		this.candidato = candidato;
 		this.dataCriacao = dataCriacao;
@@ -48,7 +55,7 @@ public class VagaCandidato extends Model implements PathBindable<VagaCandidato>,
 	}
 	
 	public String toString() {
-		return String.format("%s - %s - %s - %s - %s", vaga.id, candidato.id, dataCriacao, criadoPor, aprovado);
+		return String.format("%s - %s - %s - %s - %s", id, candidato.id, dataCriacao, criadoPor, aprovado);
 	}
 	
 	public static Page<VagaCandidato> buscarTodos(int page) {
@@ -88,14 +95,20 @@ public class VagaCandidato extends Model implements PathBindable<VagaCandidato>,
 	}
 	@Override
 	public String javascriptUnbind() {
-		return this.vaga.id.toString();
+		return this.id.toString();
 	}
 	@Override
 	public String unbind(String arg0) {
-		return this.vaga.id.toString();
+		return this.id.toString();
 	}
 	@Override
 	public Option<VagaCandidato> bind(String key, Map<String, String[]> data) {
-		return Option.Some(buscarPorIdVaga(new Long(data.get("vaga.id")[0])));
+		return Option.Some(buscarPorIdVaga(new Long(data.get("id")[0])));
 	}
+	public static Map<String,String> options() {
+        LinkedHashMap<String,String> options = new LinkedHashMap<String,String>();
+        options.put("Nao", "Não");
+        options.put("Sim", "Sim");
+        return options;
+    }
 }

@@ -40,7 +40,8 @@
   <input type="submit" class="btn btn-primary" value="Save">
   <a class="btn" href="@routes.Vagas.lista(0)">Cancel</a>
   }
-  
-  <a class="btn" href="@routes.VagasCandidatos.candidatosPorVaga(vagaForm.get, 0)">Candidatos</a>
+  @if(!vagaForm.value.toString().equals("None")) {
+  	  <a class="btn" href="@routes.VagasCandidatos.candidatosPorVaga(vagaForm.get, 0)">Candidatos</a>
+	}
 }
       

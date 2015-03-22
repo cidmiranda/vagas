@@ -65,11 +65,13 @@ create table vaga (
 ;
 
 create table vaga_candidato (
+  id                        bigint auto_increment not null,
   vaga_id                   bigint,
   candidato_id              bigint,
   data_criacao              datetime,
   criado_por                varchar(255),
-  aprovado                  varchar(255))
+  aprovado                  varchar(255),
+  constraint pk_vaga_candidato primary key (id))
 ;
 
 

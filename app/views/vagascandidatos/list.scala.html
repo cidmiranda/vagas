@@ -21,6 +21,7 @@
         <th>Area</th>
         <th>Cargo</th>
         <th>Candidato</th>
+        <th>Aprovado</th>
         <th></th>
       </tr>
     </thead>
@@ -28,28 +29,32 @@
     @for(vagaCandidatos <- currentPage.getList()) {
       <tr>
         <td>
-        	<a href="@routes.Vagas.detalhes(vagaCandidatos.vaga)">
+        	<a href="@routes.VagasCandidatos.detalhes(vagaCandidatos)">
           		@vagaCandidatos.vaga.id
         	</a>
         </td>
         <td>
-        	<a href="@routes.Vagas.detalhes(vagaCandidatos.vaga)">
+        	<a href="@routes.VagasCandidatos.detalhes(vagaCandidatos)">
 				@vagaCandidatos.vaga.area.nome
 			</a>
 		</td>
 		<td>
-        	<a href="@routes.Vagas.detalhes(vagaCandidatos.vaga)">
+        	<a href="@routes.VagasCandidatos.detalhes(vagaCandidatos)">
 				@vagaCandidatos.vaga.cargo.nome
 			</a>
 		</td>
 		<td>
-        	<a href="@routes.Vagas.detalhes(vagaCandidatos.vaga)">
+        	<a href="@routes.VagasCandidatos.detalhes(vagaCandidatos)">
 				@vagaCandidatos.candidato.nome
 			</a>
 		</td>
 		<td>
-          <a href="@routes.Vagas.detalhes(vagaCandidatos.vaga)" class="btn btn-default"><i class="glyphicon glyphicon-pencil">&nbsp;</i>Alterar</a> 
-          <a onclick="javascript:del('@routes.Vagas.delete(vagaCandidatos.vaga.id)')" class="btn btn-default"><i class="glyphicon glyphicon-trash">&nbsp;</i>Excluir</a> 
+        	<a href="@routes.VagasCandidatos.detalhes(vagaCandidatos)">
+				@vagaCandidatos.aprovado
+			</a>
+		</td>
+		<td>
+          <a href="@routes.VagasCandidatos.detalhes(vagaCandidatos)" class="btn btn-default"><i class="glyphicon glyphicon-pencil">&nbsp;</i>Alterar</a>
         </td>
       </tr>
       }

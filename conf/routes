@@ -68,6 +68,7 @@ DELETE 	/vagas/:id        			controllers.Vagas.delete(id: Long)
 GET  	/areas/:id/vagas  controllers.Vagas.vagasPorArea(id: models.Area, page: Integer ?= 0)
 
 #Candidatos por vaga
-GET  	/vagascandidatos/:id/candidatos       			controllers.VagasCandidatos.candidatosPorVaga(id: models.Vaga, page: Integer ?= 0)
-GET  	/vagascandidatos/novo       						controllers.VagasCandidatos.novo()
-POST 	/vagascandidatos/           controllers.VagasCandidatos.salvar()
+GET  	/vagascandidatos/:id/candidatos	controllers.VagasCandidatos.candidatosPorVaga(id: models.Vaga, page: Integer ?= 0)
+GET  	/vagascandidatos/:id       		controllers.VagasCandidatos.detalhes(id: models.VagaCandidato)
+GET  	/vagascandidatos/novo/			controllers.VagasCandidatos.novo()
+POST 	/vagascandidatos/           	controllers.VagasCandidatos.salvar()

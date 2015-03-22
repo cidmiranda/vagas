@@ -1,6 +1,7 @@
 package models;
 
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -146,5 +147,11 @@ public class Vaga extends Model implements PathBindable<Vaga>, QueryStringBindab
 	public Option<Vaga> bind(String key, Map<String, String[]> data) {
 		return Option.Some(buscarPorId(new Long(data.get("id")[0])));
 	}
-	
+	public static Map<String,String> options() {
+        LinkedHashMap<String,String> options = new LinkedHashMap<String,String>();
+        for(Vaga c: Vaga.find.orderBy("cargo.nome").findList()) {
+            options.put(c.id.toString(), c.cargo.nome);
+        }
+        return options;
+    }
 }
