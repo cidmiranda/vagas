@@ -8,6 +8,7 @@
   @helper.form(action = routes.VagasCandidatos.salvar()) {
   <fieldset>
 	  <legend>VagaCandidatos (@vagacandidatoForm("id").valueOr("Novo"))</legend>
+	  @helper.inputText(vagacandidatoForm("id"), '_label -> "ID")
 	  @select(
                 vagacandidatoForm("vaga.id"), 
                 options(Vaga.options), 
@@ -28,7 +29,7 @@
             )
   </fieldset>
   <input type="submit" class="btn btn-primary" value="Save">
-  <a class="btn" href="">Cancel</a>
+  <a class="btn" href="javascript:history.back();">Cancel</a>
   }
 }
       

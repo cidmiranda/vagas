@@ -9,14 +9,16 @@ GET     /                     controllers.Areas.vagasPorArea(page: Integer ?= 0)
 GET     /assets/*file         controllers.Assets.at(path="/public", file)
 
 # Diretores
-GET  	/diretores/           controllers.Diretores.lista(page: Integer ?= 0)
+GET     /diretores/			  controllers.Diretores.list(p:Int ?= 0, s ?= "nome", o ?= "asc", f ?= "")
+#GET  	/diretores/           controllers.Diretores.lista(page: Integer ?= 0)
 GET  	/diretores/novo       controllers.Diretores.novo()
 GET  	/diretores/:id        controllers.Diretores.detalhes(id: models.Diretor)
 POST 	/diretores/           controllers.Diretores.salvar()
 DELETE 	/diretores/:id        controllers.Diretores.delete(id: Long)
 
 # Gestores
-GET  	/gestores/           controllers.Gestores.lista(page: Integer ?= 0)
+GET     /gestores/			  controllers.Gestores.list(p:Int ?= 0, s ?= "nome", o ?= "asc", f ?= "")
+#GET  	/gestores/           controllers.Gestores.lista(page: Integer ?= 0)
 GET  	/gestores/novo       controllers.Gestores.novo()
 GET  	/gestores/:id        controllers.Gestores.detalhes(id: models.Gestor)
 POST 	/gestores/           controllers.Gestores.salvar()
@@ -72,3 +74,4 @@ GET  	/vagascandidatos/:id/candidatos	controllers.VagasCandidatos.candidatosPorV
 GET  	/vagascandidatos/:id       		controllers.VagasCandidatos.detalhes(id: models.VagaCandidato)
 GET  	/vagascandidatos/novo/			controllers.VagasCandidatos.novo()
 POST 	/vagascandidatos/           	controllers.VagasCandidatos.salvar()
+DELETE 	/vagascandidatos/:id        	controllers.VagasCandidatos.delete(id: Long)

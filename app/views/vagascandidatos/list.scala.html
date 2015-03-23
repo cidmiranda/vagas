@@ -30,7 +30,7 @@
       <tr>
         <td>
         	<a href="@routes.VagasCandidatos.detalhes(vagaCandidatos)">
-          		@vagaCandidatos.vaga.id
+          		@vagaCandidatos.id
         	</a>
         </td>
         <td>
@@ -54,7 +54,8 @@
 			</a>
 		</td>
 		<td>
-          <a href="@routes.VagasCandidatos.detalhes(vagaCandidatos)" class="btn btn-default"><i class="glyphicon glyphicon-pencil">&nbsp;</i>Alterar</a>
+		  <a href="@routes.VagasCandidatos.detalhes(vagaCandidatos)" class="btn btn-default"><i class="glyphicon glyphicon-pencil">&nbsp;</i>Alterar</a>
+		  <a onclick="javascript:del('@routes.VagasCandidatos.delete(vagaCandidatos.id)')" class="btn btn-default"><i class="glyphicon glyphicon-trash">&nbsp;</i>Excluir</a>
         </td>
       </tr>
       }
@@ -85,7 +86,6 @@
 	         }
 	  </ul>
 	</nav>
-      
    <a href="@routes.VagasCandidatos.novo()" class="btn btn-default">
     <i class="glyphicon glyphicon-plus"></i> Novo candidato</a>
 }

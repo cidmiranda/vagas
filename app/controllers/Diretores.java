@@ -1,5 +1,6 @@
 package controllers;
 
+import models.Area;
 import models.Diretor;
 import play.data.Form;
 import play.mvc.Controller;
@@ -10,13 +11,24 @@ import com.avaje.ebean.Page;
 public class Diretores extends Controller{
 
 	private static final Form<Diretor> diretorForm = Form.form(Diretor.class);
+	public static Result GO_HOME = redirect(
+	        routes.Diretores.list(0, "nome", "asc", "")
+	    );
+	public static Result list(int page, String sortBy, String order, String filter) {
+        return ok(
+        		views.html.diretores.list.render(
+            	Diretor.page(page, 10, sortBy, order, filter),
+                sortBy, order, filter
+            )
+        );
+    }
 	public static Result index() {
-	    return redirect(routes.Diretores.lista(0));
-	  }
-	public static Result lista(Integer page){
+        return GO_HOME;
+    }
+	/*public static Result lista(Integer page){
 		Page<Diretor> diretores = Diretor.buscarTodos(page);
 	    return ok(views.html.diretores.list.render(diretores));
-	}
+	}*/
 	public static Result novo(){
 		 return ok(views.html.diretores.detalhes.render(diretorForm));
 	}
@@ -38,14 +50,19 @@ public class Diretores extends Controller{
 	    }
 		flash("success",
 		        String.format("Diretor atualizado %s", diretor));
-	    return redirect(routes.Diretores.lista(0));
+	    return redirect(routes.Diretores.list(0, "nome", "asc", ""));
 	}
 	public static Result delete(Long id) {
 	  final Diretor diretor = Diretor.buscarPorId(id);
+	  
 	  if(diretor == null) {
 	    return notFound(String.format("Diretor com id %s não existe.", id));
 	  }
+	  final Area area = Area.buscarPorDiretor(id);
+	  if(area != null) {
+	    return badRequest(String.format("Diretor %s não pode ser excluído.", id));
+	  }
 	  diretor.delete();
-	  return redirect(routes.Diretores.lista(0));
+	  return redirect(routes.Diretores.list(0, "nome", "asc", ""));
 	}
 }

@@ -3,11 +3,11 @@ package models;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 
 import play.data.validation.Constraints;
 import play.db.ebean.Model;
@@ -22,14 +22,18 @@ public class Area  extends Model implements PathBindable<Area>, QueryStringBinda
 	@Id
 	@GeneratedValue
 	public Long id;
+	 
 	@Constraints.Required
 	public String nome;
 	
 	@ManyToOne
+	@Constraints.Required
 	public Diretor diretor;
 	
 	@ManyToOne
+	@Constraints.Required
 	public Gestor gestor;
+	
 	public static Finder<Long, Area> find = new Finder<Long, Area>(Long.class, Area.class);
 	public Area() {}
 	public Area(Long id, String nome, Diretor diretor, Gestor gestor) {
@@ -50,6 +54,12 @@ public class Area  extends Model implements PathBindable<Area>, QueryStringBinda
 	}
 	public static Area buscarPorId(Long id) {
 		return find.where().eq("id", id).findUnique();
+	}
+	public static Area buscarPorDiretor(Long id) {
+		return find.where().eq("diretor.id", id).findUnique();
+	}
+	public static Area buscarPorGestor(Long id) {
+		return find.where().eq("gestor.id", id).findUnique();
 	}
 	public static Area buscarPorNome(String nome) {
 		return find.where().eq("nome", nome).findUnique();

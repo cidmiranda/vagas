@@ -1,4 +1,31 @@
-@(currentPage: com.avaje.ebean.Page[Gestor])
+@(currentPage: com.avaje.ebean.Page[Gestor], currentSortBy: String, currentOrder: String, currentFilter: String)
+@link(newPage:Int, newSortBy:String) = @{
+    
+    var sortBy = currentSortBy
+    var order = currentOrder
+    
+    if(newSortBy != null) {
+        sortBy = newSortBy
+        if(currentSortBy == newSortBy) {
+            if(currentOrder == "asc") {
+                order = "desc"
+            } else {
+                order = "asc"
+            }
+        } else {
+            order = "asc"
+        }
+    }
+    
+    // Generate the link
+    routes.Gestores.list(newPage, sortBy, order, currentFilter)
+    
+}
+@header(key:String, title:String) = {
+    <th class="@key.replace(".","_") header @if(currentSortBy == key) @{if(currentOrder == "asc") "headerSortDown" else "headerSortUp"}">
+        <a href="@link(0, key)">@title</a>
+    </th>
+}
 @main("Gestores") {
 
   <h2>Gestores</h2>
@@ -10,10 +37,17 @@
         success: function(results) {
           // Refresh the page
           location.reload();
-        }
+        },
+        error: function (results) {
+            alert(results.responseText);
+          }
       });
    }
    </script>
+   <form action="@link(0, "nome")" method="GET">
+       <input type="search" id="searchbox" name="f" value="@currentFilter" placeholder="Filtrar nome...">
+       <input type="submit" id="searchsubmit" value="Filtrar por nome" class="btn primary">
+   </form>
    <table class="table table-striped">
     <thead>
       <tr>
@@ -37,7 +71,7 @@
 		</td>
 		<td>
           <a href="@routes.Gestores.detalhes(gestor)" class="btn btn-default"><i class="glyphicon glyphicon-pencil">&nbsp;</i>Alterar</a> 
-          <a onclick="javascript:del('@routes.Gestores.delete(gestor.id)')" class="btn btn-default"><i class="glyphicon glyphicon-trash">&nbsp;</i>Excluir</a> 
+          <a onclick="javascript:if(confirm('Deseja realmente excluir?')) del('@routes.Gestores.delete(gestor.id)'); else return false"" class="btn btn-default"><i class="glyphicon glyphicon-trash">&nbsp;</i>Excluir</a> 
         </td>
       </tr>
       }
@@ -46,26 +80,26 @@
    <nav>
 	  <ul class="pagination">
 	  	@if(currentPage.hasPrev) {
-	             <li class="prev">
-	                 <a href="@routes.Gestores.lista(currentPage.getPageIndex - 1)">&larr; </a>
-	             </li>
-	         } else {
-	             <li class="prev disabled">
-	                 <a>&larr;</a>
-	             </li>
-	         }
-	         <li class="current">
-	             <a>@currentPage.getDisplayXtoYofZ(" - "," / ")</a>
-	         </li>
-	         @if(currentPage.hasNext) {
-	             <li class="next">
-	                 <a href="@routes.Gestores.lista(currentPage.getPageIndex + 1)"> &rarr;</a>
-	             </li>
-	         } else {
-	             <li class="next disabled">
-	                 <a>&rarr;</a>
-	             </li>
-	         }
+                    <li class="prev">
+                        <a href="@link(currentPage.getPageIndex - 1, null)">&larr; Anterior</a>
+                    </li>
+                } else {
+                    <li class="prev disabled">
+                        <a>&larr; Anterior</a>
+                    </li>
+                }
+                <li class="current">
+                    <a>Exibindo @currentPage.getDisplayXtoYofZ(" a "," de ")</a>
+                </li>
+                @if(currentPage.hasNext) {
+                    <li class="next">
+                        <a href="@link(currentPage.getPageIndex + 1, null)">Próximo &rarr;</a>
+                    </li>
+                } else {
+                    <li class="next disabled">
+                        <a>Próximo &rarr;</a>
+                    </li>
+                }
 	  </ul>
 	</nav>
    <a href="@routes.Gestores.novo()" class="btn btn-default">

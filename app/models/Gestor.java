@@ -31,6 +31,15 @@ public class Gestor extends Model implements PathBindable<Gestor>, QueryStringBi
 	public String toString() {
 		return String.format("%s - %s", id, nome);
 	}
+	public static Page<Gestor> page(int page, int pageSize, String sortBy, String order, String filter) {
+        return 
+            find.where()
+                .ilike("nome", "%" + filter + "%")
+                .orderBy(sortBy + " " + order)
+                .findPagingList(pageSize)
+                .setFetchAhead(false)
+                .getPage(page);
+    }
 	public static Page<Gestor> buscarTodos(int page) {
 	    return find.where()
                 .orderBy("id asc")

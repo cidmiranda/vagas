@@ -35,13 +35,11 @@
             )
       @helper.inputText(vagaForm("prioridade"), '_label -> "Prioridade")       
       @helper.inputText(vagaForm("remuneracao"), '_label -> "Remuneração")
-      @helper.inputText(vagaForm("dataInicio"), '_label -> "Data Início")
+      @helper.inputDate(vagaForm("dataInicio"), '_label -> "Data Início")
   </fieldset>
   <input type="submit" class="btn btn-primary" value="Save">
   <a class="btn" href="@routes.Vagas.lista(0)">Cancel</a>
   }
-  @if(!vagaForm.value.toString().equals("None")) {
-  	  <a class="btn" href="@routes.VagasCandidatos.candidatosPorVaga(vagaForm.get, 0)">Candidatos</a>
-	}
+  
 }
       

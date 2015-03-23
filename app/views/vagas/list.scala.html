@@ -49,7 +49,8 @@
 		</td>
 		<td>
           <a href="@routes.Vagas.detalhes(vaga)" class="btn btn-default"><i class="glyphicon glyphicon-pencil">&nbsp;</i>Alterar</a> 
-          <a onclick="javascript:del('@routes.Vagas.delete(vaga.id)')" class="btn btn-default"><i class="glyphicon glyphicon-trash">&nbsp;</i>Excluir</a> 
+          <a onclick="javascript:del('@routes.Vagas.delete(vaga.id)')" class="btn btn-default"><i class="glyphicon glyphicon-trash">&nbsp;</i>Excluir</a>
+          <a href="@routes.VagasCandidatos.candidatosPorVaga(vaga,0)" class="btn btn-default"><i class="glyphicon glyphicon-user">&nbsp;</i>Candidatos</a> 
         </td>
       </tr>
       }
