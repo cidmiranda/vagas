@@ -1,6 +1,7 @@
 package controllers;
 
 import models.Area;
+import models.Vaga;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -10,13 +11,21 @@ import com.avaje.ebean.Page;
 public class Areas extends Controller{
 
 	private static final Form<Area> areaForm = Form.form(Area.class);
+	public static Result GO_HOME = redirect(
+	        routes.Areas.list(0, "nome", "asc", "", "nome")
+	    );
+	public static Result list(int page, String sortBy, String order, String filter, String atributo) {
+        return ok(
+        		views.html.areas.list.render(
+            	Area.page(page, 10, sortBy, order, filter, atributo),
+                sortBy, order, filter, atributo
+            )
+        );
+    }
 	public static Result index() {
-		return redirect(routes.Areas.lista(0));
-	  }
-	public static Result lista(Integer page){
-		Page<Area> areas = Area.buscarTodos(page);
-		return ok(views.html.areas.list.render(areas));
-	}
+        return GO_HOME;
+    }
+	
 	public static Result novo(){
 		return ok(views.html.areas.detalhes.render(areaForm));
 	}
@@ -42,14 +51,18 @@ public class Areas extends Controller{
 	    }
 		flash("success",
 		        String.format("Area atualizada %s", area));
-		return redirect(routes.Areas.lista(0));
+		return redirect(routes.Areas.list(0, "nome", "asc", "", "nome"));
 	}
 	public static Result delete(Long id) {
 	  final Area area = Area.buscarPorId(id);
 	  if(area == null) {
-		  return ok();
+	    return notFound(String.format("Área com id %s não existe.", id));
+	  }
+	  final Vaga vaga = Vaga.buscarPorArea(id);
+	  if(vaga != null) {
+	    return badRequest(String.format("Área %s não pode ser excluída.", id));
 	  }
 	  area.delete();
-	  return redirect(routes.Areas.lista(0));
+	  return redirect(routes.Areas.list(0, "nome", "asc", "", "nome"));
 	}
 }

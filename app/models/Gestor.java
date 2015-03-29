@@ -31,10 +31,10 @@ public class Gestor extends Model implements PathBindable<Gestor>, QueryStringBi
 	public String toString() {
 		return String.format("%s - %s", id, nome);
 	}
-	public static Page<Gestor> page(int page, int pageSize, String sortBy, String order, String filter) {
+	public static Page<Gestor> page(int page, int pageSize, String sortBy, String order, String filter, String atributo) {
         return 
             find.where()
-                .ilike("nome", "%" + filter + "%")
+                .ilike(atributo, "%" + filter + "%")
                 .orderBy(sortBy + " " + order)
                 .findPagingList(pageSize)
                 .setFetchAhead(false)

@@ -45,6 +45,15 @@ public class Area  extends Model implements PathBindable<Area>, QueryStringBinda
 	public String toString() {
 		return String.format("%s - %s", id, nome);
 	}
+	public static Page<Area> page(int page, int pageSize, String sortBy, String order, String filter, String atributo) {
+        return 
+            find.where()
+                .ilike(atributo, "%" + filter + "%")
+                .orderBy(sortBy + " " + order)
+                .findPagingList(pageSize)
+                .setFetchAhead(false)
+                .getPage(page);
+    }
 	public static Page<Area> buscarTodos(int page) {
 	    return find.where()
                 .orderBy("id asc")

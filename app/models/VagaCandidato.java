@@ -5,20 +5,20 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 
-import com.avaje.ebean.Page;
-
 import play.db.ebean.Model;
 import play.libs.F.Option;
 import play.mvc.PathBindable;
 import play.mvc.QueryStringBindable;
+
+import com.avaje.ebean.Ebean;
+import com.avaje.ebean.Page;
+import com.avaje.ebean.SqlUpdate;
 
 @Entity
 @Table(
@@ -30,10 +30,10 @@ import play.mvc.QueryStringBindable;
 public class VagaCandidato extends Model implements PathBindable<VagaCandidato>, QueryStringBindable<VagaCandidato>  {
 	public static Finder<Long, VagaCandidato> find = new Finder<Long, VagaCandidato>(Long.class, VagaCandidato.class);
 	
-	@Id
+/*	@Id
 	@GeneratedValue
 	public Long id;
-	
+*/	
 	@ManyToOne
 	public Vaga vaga;
 	
@@ -52,9 +52,9 @@ public class VagaCandidato extends Model implements PathBindable<VagaCandidato>,
 		
 	}
 
-	public VagaCandidato(Long id, Vaga vaga, Candidato candidato, Date dataCriacao,
+	public VagaCandidato(/*Long id, */Vaga vaga, Candidato candidato, Date dataCriacao,
 			String criadoPor, String aprovado) {
-		this.id = id;
+		//this.id = id;
 		this.vaga = vaga;
 		this.candidato = candidato;
 		this.dataCriacao = dataCriacao;
@@ -90,8 +90,11 @@ public class VagaCandidato extends Model implements PathBindable<VagaCandidato>,
                 .setFetchAhead(false)
                 .getPage(page);
 	}
-	public static VagaCandidato buscarPorId(Long id) {
-		return find.where().eq("id", id).findUnique();
+	public static VagaCandidato buscarPorVagaCandidato(Long idVaga, Long id) {
+		return find.where().eq("vaga.id", idVaga).eq("candidato.id", id).findUnique();
+	}
+	public static VagaCandidato buscarPorId(Long idVaga) {
+		return find.where().eq("vaga.id", idVaga).findUnique();
 	}
 	public static VagaCandidato buscarPorIdVaga(Long id) {
 		return find.where().eq("vaga.id", id).findUnique();
@@ -106,11 +109,11 @@ public class VagaCandidato extends Model implements PathBindable<VagaCandidato>,
 	}
 	@Override
 	public String javascriptUnbind() {
-		return this.id.toString();
+		return this.vaga.id.toString();
 	}
 	@Override
 	public String unbind(String arg0) {
-		return this.id.toString();
+		return this.vaga.id.toString();
 	}
 	@Override
 	public Option<VagaCandidato> bind(String key, Map<String, String[]> data) {
@@ -122,4 +125,28 @@ public class VagaCandidato extends Model implements PathBindable<VagaCandidato>,
         options.put("Sim", "Sim");
         return options;
     }
+	@Override
+	public void update() {
+		String sql = "UPDATE  vaga_candidato SET aprovado = :aprovado where vaga_id = :idVaga and candidato_id = :idCandidato";
+		SqlUpdate update = Ebean.createSqlUpdate(sql);
+		
+		update.setParameter("aprovado", this.aprovado);
+		update.setParameter("idVaga", this.vaga.id);
+		update.setParameter("idCandidato", this.candidato.id);
+
+		int modifiedCount = Ebean.execute(update); 
+		System.out.println("update override " + modifiedCount);
+	}
+	
+	@Override
+	public void delete() {
+		String sql = "DELETE from vaga_candidato where vaga_id = :idVaga and candidato_id = :idCandidato";
+		SqlUpdate delete = Ebean.createSqlUpdate(sql);
+		
+		delete.setParameter("idVaga", this.vaga.id);
+		delete.setParameter("idCandidato", this.candidato.id);
+
+		int modifiedCount = Ebean.execute(delete); 
+		System.out.println("delete override " + modifiedCount);
+	}
 }

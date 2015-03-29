@@ -29,33 +29,33 @@
     @for(vagaCandidatos <- currentPage.getList()) {
       <tr>
         <td>
-        	<a href="@routes.VagasCandidatos.detalhes(vagaCandidatos)">
-          		@vagaCandidatos.id
+        	<a href="@routes.VagasCandidatos.detalhes(vagaCandidatos.vaga.id, vagaCandidatos.candidato.id)">
+          		@vagaCandidatos.vaga.id
         	</a>
         </td>
         <td>
-        	<a href="@routes.VagasCandidatos.detalhes(vagaCandidatos)">
+        	<a href="@routes.VagasCandidatos.detalhes(vagaCandidatos.vaga.id, vagaCandidatos.candidato.id)">
 				@vagaCandidatos.vaga.area.nome
 			</a>
 		</td>
 		<td>
-        	<a href="@routes.VagasCandidatos.detalhes(vagaCandidatos)">
+        	<a href="@routes.VagasCandidatos.detalhes(vagaCandidatos.vaga.id, vagaCandidatos.candidato.id)">
 				@vagaCandidatos.vaga.cargo.nome
 			</a>
 		</td>
 		<td>
-        	<a href="@routes.VagasCandidatos.detalhes(vagaCandidatos)">
+        	<a href="@routes.VagasCandidatos.detalhes(vagaCandidatos.vaga.id, vagaCandidatos.candidato.id)">
 				@vagaCandidatos.candidato.nome
 			</a>
 		</td>
 		<td>
-        	<a href="@routes.VagasCandidatos.detalhes(vagaCandidatos)">
+        	<a href="@routes.VagasCandidatos.detalhes(vagaCandidatos.vaga.id, vagaCandidatos.candidato.id)">
 				@vagaCandidatos.aprovado
 			</a>
 		</td>
 		<td>
-		  <a href="@routes.VagasCandidatos.detalhes(vagaCandidatos)" class="btn btn-default"><i class="glyphicon glyphicon-pencil">&nbsp;</i>Alterar</a>
-		  <a onclick="javascript:del('@routes.VagasCandidatos.delete(vagaCandidatos.id)')" class="btn btn-default"><i class="glyphicon glyphicon-trash">&nbsp;</i>Excluir</a>
+		  <a href="@routes.VagasCandidatos.detalhes(vagaCandidatos.vaga.id, vagaCandidatos.candidato.id)" class="btn btn-default"><i class="glyphicon glyphicon-pencil">&nbsp;</i>Alterar</a>
+		  <a onclick="javascript:del('@routes.VagasCandidatos.delete(vagaCandidatos.vaga.id, vagaCandidatos.candidato.id)')" class="btn btn-default"><i class="glyphicon glyphicon-trash">&nbsp;</i>Excluir</a>
         </td>
       </tr>
       }
@@ -86,6 +86,6 @@
 	         }
 	  </ul>
 	</nav>
-   <a href="@routes.VagasCandidatos.novo()" class="btn btn-default">
+   <a href="@routes.VagasCandidatos.novo(VagasCandidatos.vagaContext)" class="btn btn-default">
     <i class="glyphicon glyphicon-plus"></i> Novo candidato</a>
 }

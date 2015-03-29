@@ -8,11 +8,11 @@
   @helper.form(action = routes.Diretores.salvar()) {
   <fieldset>
 	  <legend>Diretor (@diretorForm("nome").valueOr("Novo"))</legend>
-	  @helper.inputText(diretorForm("id"), '_label -> "ID")
+	  @helper.inputText(diretorForm("id"), '_label -> "ID", 'readonly -> "readonly")
 	  @helper.inputText(diretorForm("nome"),'_label -> "Nome")
   </fieldset>
-  <input type="submit" class="btn btn-primary" value="Save">
-  <a class="btn" href="@routes.Diretores.list(0, "nome", "asc", "")">Cancel</a>
+  <input type="submit" class="btn btn-success" value="Save">
+  <a class="btn btn-danger" href="@routes.Diretores.list(0, "nome", "asc", "","nome")">Cancel</a>
   }
 }
       

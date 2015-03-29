@@ -1,4 +1,31 @@
-@(currentPage: com.avaje.ebean.Page[Area])
+@(currentPage: com.avaje.ebean.Page[Area], currentSortBy: String, currentOrder: String, currentFilter: String, currentAtribute: String)
+@link(newPage:Int, newSortBy:String) = @{
+    
+    var sortBy = currentSortBy
+    var order = currentOrder
+    
+    if(newSortBy != null) {
+        sortBy = newSortBy
+        if(currentSortBy == newSortBy) {
+            if(currentOrder == "asc") {
+                order = "desc"
+            } else {
+                order = "asc"
+            }
+        } else {
+            order = "asc"
+        }
+    }
+    
+    // Generate the link
+    routes.Areas.list(newPage, sortBy, order, currentFilter, currentAtribute)
+    
+}
+@header(key:String, title:String) = {
+    <th class="@key.replace(".","_") header @if(currentSortBy == key) @{if(currentOrder == "asc") "headerSortDown" else "headerSortUp"}">
+        <a href="@link(0, key)">@title</a>
+    </th>
+}
 @main("Áreas") {
 
   <h2>Áreas</h2>
@@ -10,17 +37,30 @@
         success: function(results) {
           // Refresh the page
           location.reload();
-        }
+        },
+        error: function (results) {
+            alert(results.responseText);
+          }
       });
    }
    </script>
+   <form action="@link(0, "nome")" method="GET">
+       <input type="search" id="searchbox" name="f" value="@currentFilter" placeholder="Filtrar...">
+       <select name="a">
+       		<option value="id" @(if(currentAtribute == "id") "selected=\"selected\"" else "")>ID</option>
+       		<option value="nome" @(if(currentAtribute == "nome") "selected=\"selected\"" else "")>Nome</option>
+       		<option value="diretor.nome" @(if(currentAtribute == "diretor.nome") "selected=\"selected\"" else "")>Diretor</option>
+       		<option value="gestor.nome" @(if(currentAtribute == "gestor.nome") "selected=\"selected\"" else "")>Gestor</option>
+       </select>
+       <a id="searchsubmit" href="#" class="btn btn-primary" onclick="document.forms[0].submit();"><i class="glyphicon glyphicon-search">&nbsp;</i>Filtrar</a>
+   </form>
    <table class="table table-striped">
     <thead>
       <tr>
-        <th>ID</th>
-        <th>Nome</th>
-        <th>Diretor</th>
-        <th>Gestor</th>
+        @header("id","ID")
+        @header("nome","Nome")
+        @header("diretor.nome","Diretor")
+        @header("gestor.nome","Gestor")
         <th></th>
       </tr>
     </thead>
@@ -49,7 +89,7 @@
 		</td>
 		<td>
           <a href="@routes.Areas.detalhes(area)" class="btn btn-default"><i class="glyphicon glyphicon-pencil">&nbsp;</i>Alterar</a> 
-          <a onclick="javascript:del('@routes.Areas.delete(area.id)')" class="btn btn-default"><i class="glyphicon glyphicon-trash">&nbsp;</i>Excluir</a> 
+          <a onclick="javascript:if(confirm('Deseja realmente excluir?')) del('@routes.Areas.delete(area.id)'); else return false"" class="btn btn-danger"><i class="glyphicon glyphicon-trash">&nbsp;</i>Excluir</a> 
         </td>
       </tr>
       }
@@ -58,29 +98,29 @@
    <nav>
 	  <ul class="pagination">
 	  	@if(currentPage.hasPrev) {
-	             <li class="prev">
-	                 <a href="@routes.Areas.lista(currentPage.getPageIndex - 1)">&larr; </a>
-	             </li>
-	         } else {
-	             <li class="prev disabled">
-	                 <a>&larr;</a>
-	             </li>
-	         }
-	         <li class="current">
-	             <a>@currentPage.getDisplayXtoYofZ(" - "," / ")</a>
-	         </li>
-	         @if(currentPage.hasNext) {
-	             <li class="next">
-	                 <a href="@routes.Areas.lista(currentPage.getPageIndex + 1)"> &rarr;</a>
-	             </li>
-	         } else {
-	             <li class="next disabled">
-	                 <a>&rarr;</a>
-	             </li>
-	         }
+                    <li class="prev">
+                        <a href="@link(currentPage.getPageIndex - 1, null)">&larr; Anterior</a>
+                    </li>
+                } else {
+                    <li class="prev disabled">
+                        <a>&larr; Anterior</a>
+                    </li>
+                }
+                <li class="current">
+                    <a>Exibindo @currentPage.getDisplayXtoYofZ(" a "," de ")</a>
+                </li>
+                @if(currentPage.hasNext) {
+                    <li class="next">
+                        <a href="@link(currentPage.getPageIndex + 1, null)">Próximo &rarr;</a>
+                    </li>
+                } else {
+                    <li class="next disabled">
+                        <a>Próximo &rarr;</a>
+                    </li>
+                }
 	  </ul>
 	</nav>
       
-   <a href="@routes.Areas.novo()" class="btn btn-default">
+   <a href="@routes.Areas.novo()" class="btn btn-success">
     <i class="glyphicon glyphicon-plus"></i> Nova área</a>
 }

@@ -24,7 +24,7 @@
 	  <ul class="pagination">
 	  	@if(currentPage.hasPrev) {
 	             <li class="prev">
-	                 <a href="@routes.Areas.lista(currentPage.getPageIndex - 1)">&larr; </a>
+	                 <a href="@routes.Areas.list(0, "nome", "asc", "","nome")">&larr; </a>
 	             </li>
 	         } else {
 	             <li class="prev disabled">
@@ -36,7 +36,7 @@
 	         </li>
 	         @if(currentPage.hasNext) {
 	             <li class="next">
-	                 <a href="@routes.Areas.lista(currentPage.getPageIndex + 1)"> &rarr;</a>
+	                 <a href="@routes.Areas.list(0, "nome", "asc", "","nome")"> &rarr;</a>
 	             </li>
 	         } else {
 	             <li class="next disabled">

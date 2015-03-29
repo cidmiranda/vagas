@@ -7,8 +7,7 @@
   <h1>Formulário VagaCandidatos</h1>
   @helper.form(action = routes.VagasCandidatos.salvar()) {
   <fieldset>
-	  <legend>VagaCandidatos (@vagacandidatoForm("id").valueOr("Novo"))</legend>
-	  @helper.inputText(vagacandidatoForm("id"), '_label -> "ID")
+    <legend>VagaCandidatos (@vagacandidatoForm("candidato.id").valueOr("Novo"))</legend>
 	  @select(
                 vagacandidatoForm("vaga.id"), 
                 options(Vaga.options), 

@@ -1,4 +1,4 @@
-@(currentPage: com.avaje.ebean.Page[Gestor], currentSortBy: String, currentOrder: String, currentFilter: String)
+@(currentPage: com.avaje.ebean.Page[Gestor], currentSortBy: String, currentOrder: String, currentFilter: String, currentAtribute: String)
 @link(newPage:Int, newSortBy:String) = @{
     
     var sortBy = currentSortBy
@@ -18,7 +18,7 @@
     }
     
     // Generate the link
-    routes.Gestores.list(newPage, sortBy, order, currentFilter)
+    routes.Gestores.list(newPage, sortBy, order, currentFilter, currentAtribute)
     
 }
 @header(key:String, title:String) = {
@@ -45,14 +45,18 @@
    }
    </script>
    <form action="@link(0, "nome")" method="GET">
-       <input type="search" id="searchbox" name="f" value="@currentFilter" placeholder="Filtrar nome...">
-       <input type="submit" id="searchsubmit" value="Filtrar por nome" class="btn primary">
+       <input type="search" id="searchbox" name="f" value="@currentFilter" placeholder="Filtrar...">
+       <select name="a">
+       		<option value="id" @(if(currentAtribute == "id") "selected=\"selected\"" else "")>ID</option>
+       		<option value="nome" @(if(currentAtribute == "nome") "selected=\"selected\"" else "")>Nome</option>
+       </select>
+       <a id="searchsubmit" href="#" class="btn btn-primary" onclick="document.forms[0].submit();"><i class="glyphicon glyphicon-search">&nbsp;</i>Filtrar</a>
    </form>
    <table class="table table-striped">
     <thead>
       <tr>
-        <th>ID</th>
-        <th>Nome</th>
+        @header("id","ID")
+        @header("nome","Nome")
         <th></th>
       </tr>
     </thead>
@@ -71,7 +75,7 @@
 		</td>
 		<td>
           <a href="@routes.Gestores.detalhes(gestor)" class="btn btn-default"><i class="glyphicon glyphicon-pencil">&nbsp;</i>Alterar</a> 
-          <a onclick="javascript:if(confirm('Deseja realmente excluir?')) del('@routes.Gestores.delete(gestor.id)'); else return false"" class="btn btn-default"><i class="glyphicon glyphicon-trash">&nbsp;</i>Excluir</a> 
+          <a onclick="javascript:if(confirm('Deseja realmente excluir?')) del('@routes.Gestores.delete(gestor.id)'); else return false"" class="btn btn-danger"><i class="glyphicon glyphicon-trash">&nbsp;</i>Excluir</a> 
         </td>
       </tr>
       }
@@ -102,6 +106,6 @@
                 }
 	  </ul>
 	</nav>
-   <a href="@routes.Gestores.novo()" class="btn btn-default">
+   <a href="@routes.Gestores.novo()" class="btn btn-success">
     <i class="glyphicon glyphicon-plus"></i> Novo gestor</a>
 }

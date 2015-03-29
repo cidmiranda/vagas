@@ -8,11 +8,11 @@
   @helper.form(action = routes.Gestores.salvar()) {
   <fieldset>  
 	  <legend>Gestor (@gestorForm("nome").valueOr("Novo"))</legend>
-	  @helper.inputText(gestorForm("id"), '_label -> "ID")
+	  @helper.inputText(gestorForm("id"), '_label -> "ID", 'readonly -> "readonly")
 	  @helper.inputText(gestorForm("nome"),'_label -> "Nome")
   </fieldset>
-  <input type="submit" class="btn btn-primary" value="Save">
-  <a class="btn" href="@routes.Gestores.list(0, "nome", "asc", "")">Cancel</a>
+  <input type="submit" class="btn btn-success" value="Save">
+  <a class="btn btn-danger" href="@routes.Gestores.list(0, "nome", "asc", "")">Cancel</a>
   }
 }
       

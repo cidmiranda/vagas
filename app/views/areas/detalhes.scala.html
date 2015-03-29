@@ -8,7 +8,7 @@
   @helper.form(action = routes.Areas.salvar()) {
   <fieldset>
 	  <legend>Área (@areaForm("nome").valueOr("Novo"))</legend>
-	  @helper.inputText(areaForm("id"), '_label -> "ID")
+	  @helper.inputText(areaForm("id"), '_label -> "ID", 'readonly -> "readonly")
 	  @helper.inputText(areaForm("nome"),'_label -> "Nome")
 	  @select(
                 areaForm("diretor.id"), 
@@ -23,8 +23,8 @@
                 '_showConstraints -> false
             )      
   </fieldset>
-  <input type="submit" class="btn btn-primary" value="Save">
-  <a class="btn" href="@routes.Areas.lista(0)">Cancel</a>
+  <input type="submit" class="btn btn-success" value="Save">
+  <a class="btn btn-danger" href="@routes.Areas.list(0, "nome", "asc", "","nome")">Cancel</a>
   }
 }
       

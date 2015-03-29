@@ -3,75 +3,76 @@
 # ~~~~
 
 # Home page
-GET     /                     controllers.Areas.vagasPorArea(page: Integer ?= 0)
+GET     /                     									controllers.Areas.vagasPorArea(page: Integer ?= 0)
 
 # Map static resources from the /public folder to the /assets URL path
-GET     /assets/*file         controllers.Assets.at(path="/public", file)
+GET     /assets/*file         									controllers.Assets.at(path="/public", file)
 
 # Diretores
-GET     /diretores/			  controllers.Diretores.list(p:Int ?= 0, s ?= "nome", o ?= "asc", f ?= "")
-#GET  	/diretores/           controllers.Diretores.lista(page: Integer ?= 0)
-GET  	/diretores/novo       controllers.Diretores.novo()
-GET  	/diretores/:id        controllers.Diretores.detalhes(id: models.Diretor)
-POST 	/diretores/           controllers.Diretores.salvar()
-DELETE 	/diretores/:id        controllers.Diretores.delete(id: Long)
+GET     /diretores/			  									controllers.Diretores.list(p:Int ?= 0, s ?= "nome", o ?= "asc", f ?= "", a ?= "nome")
+#GET  	/diretores/           									controllers.Diretores.lista(page: Integer ?= 0)
+GET  	/diretores/novo       									controllers.Diretores.novo()
+GET  	/diretores/:id        									controllers.Diretores.detalhes(id: models.Diretor)
+POST 	/diretores/           									controllers.Diretores.salvar()
+DELETE 	/diretores/:id        									controllers.Diretores.delete(id: Long)
 
 # Gestores
-GET     /gestores/			  controllers.Gestores.list(p:Int ?= 0, s ?= "nome", o ?= "asc", f ?= "")
-#GET  	/gestores/           controllers.Gestores.lista(page: Integer ?= 0)
-GET  	/gestores/novo       controllers.Gestores.novo()
-GET  	/gestores/:id        controllers.Gestores.detalhes(id: models.Gestor)
-POST 	/gestores/           controllers.Gestores.salvar()
-DELETE 	/gestores/:id        controllers.Gestores.delete(id: Long)
+GET     /gestores/			  									controllers.Gestores.list(p:Int ?= 0, s ?= "nome", o ?= "asc", f ?= "", a ?= "nome")
+#GET  	/gestores/           									controllers.Gestores.lista(page: Integer ?= 0)
+GET  	/gestores/novo       									controllers.Gestores.novo()
+GET  	/gestores/:id        									controllers.Gestores.detalhes(id: models.Gestor)
+POST 	/gestores/           									controllers.Gestores.salvar()
+DELETE 	/gestores/:id        									controllers.Gestores.delete(id: Long)
 
 # Area
-GET  	/areas/           controllers.Areas.lista(page: Integer ?= 0)
-GET  	/areas/novo       controllers.Areas.novo()
-GET  	/areas/:id        controllers.Areas.detalhes(id: models.Area)
-POST 	/areas/           controllers.Areas.salvar()
-DELETE 	/areas/:id        controllers.Areas.delete(id: Long)
+GET  	/areas/           										controllers.Areas.list(p:Int ?= 0, s ?= "nome", o ?= "asc", f ?= "", a ?= "nome")
+#GET  	/areas/           										controllers.Areas.lista(page: Integer ?= 0)
+GET  	/areas/novo       										controllers.Areas.novo()
+GET  	/areas/:id        										controllers.Areas.detalhes(id: models.Area)
+POST 	/areas/           										controllers.Areas.salvar()
+DELETE 	/areas/:id        										controllers.Areas.delete(id: Long)
 
 # Cargo
-GET  	/cargos/           controllers.Cargos.lista(page: Integer ?= 0)
-GET  	/cargos/novo       controllers.Cargos.novo()
-GET  	/cargos/:id        controllers.Cargos.detalhes(id: models.Cargo)
-POST 	/cargos/           controllers.Cargos.salvar()
-DELETE 	/cargos/:id        controllers.Cargos.delete(id: Long)
+GET  	/cargos/           										controllers.Cargos.lista(page: Integer ?= 0)
+GET  	/cargos/novo       										controllers.Cargos.novo()
+GET  	/cargos/:id        										controllers.Cargos.detalhes(id: models.Cargo)
+POST 	/cargos/           										controllers.Cargos.salvar()
+DELETE 	/cargos/:id        										controllers.Cargos.delete(id: Long)
 
 # CargosNecessarios
-GET  	/cargosnecessarios/           controllers.CargosNecessarios.lista(page: Integer ?= 0)
-GET  	/cargosnecessarios/novo       controllers.CargosNecessarios.novo()
-GET  	/cargosnecessarios/:id        controllers.CargosNecessarios.detalhes(id: models.CargoNecessario)
-POST 	/cargosnecessarios/           controllers.CargosNecessarios.salvar()
-DELETE 	/cargosnecessarios/:id        controllers.CargosNecessarios.delete(id: Long)
+GET  	/cargosnecessarios/           							controllers.CargosNecessarios.lista(page: Integer ?= 0)
+GET  	/cargosnecessarios/novo       							controllers.CargosNecessarios.novo()
+GET  	/cargosnecessarios/:id        							controllers.CargosNecessarios.detalhes(id: models.CargoNecessario)
+POST 	/cargosnecessarios/           							controllers.CargosNecessarios.salvar()
+DELETE 	/cargosnecessarios/:id        							controllers.CargosNecessarios.delete(id: Long)
 
 # Situacao
-GET  	/situacoes/           controllers.Situacoes.lista(page: Integer ?= 0)
-GET  	/situacoes/novo       controllers.Situacoes.novo()
-GET  	/situacoes/:id        controllers.Situacoes.detalhes(id: models.Situacao)
-POST 	/situacoes/           controllers.Situacoes.salvar()
-DELETE 	/situacoes/:id        controllers.Situacoes.delete(id: Long)
+GET  	/situacoes/           									controllers.Situacoes.lista(page: Integer ?= 0)
+GET  	/situacoes/novo       									controllers.Situacoes.novo()
+GET  	/situacoes/:id        									controllers.Situacoes.detalhes(id: models.Situacao)
+POST 	/situacoes/           									controllers.Situacoes.salvar()
+DELETE 	/situacoes/:id        									controllers.Situacoes.delete(id: Long)
 
 # Candidato
-GET  	/candidatos/           controllers.Candidatos.lista(page: Integer ?= 0)
-GET  	/candidatos/novo       controllers.Candidatos.novo()
-GET  	/candidatos/:id        controllers.Candidatos.detalhes(id: models.Candidato)
-POST 	/candidatos/           controllers.Candidatos.salvar()
-DELETE 	/candidatos/:id        controllers.Candidatos.delete(id: Long)
+GET  	/candidatos/           									controllers.Candidatos.lista(page: Integer ?= 0)
+GET  	/candidatos/novo       									controllers.Candidatos.novo()
+GET  	/candidatos/:id        									controllers.Candidatos.detalhes(id: models.Candidato)
+POST 	/candidatos/           									controllers.Candidatos.salvar()
+DELETE 	/candidatos/:id        									controllers.Candidatos.delete(id: Long)
 
 # Vaga
-GET  	/vagas/           						controllers.Vagas.lista(page: Integer ?= 0)
-GET  	/vagas/novo       						controllers.Vagas.novo()
-GET  	/vagas/:id        						controllers.Vagas.detalhes(id: models.Vaga)
-POST 	/vagas/           			controllers.Vagas.salvar()
-DELETE 	/vagas/:id        			controllers.Vagas.delete(id: Long)
+GET  	/vagas/           										controllers.Vagas.lista(page: Integer ?= 0)
+GET  	/vagas/novo       										controllers.Vagas.novo()
+GET  	/vagas/:id        										controllers.Vagas.detalhes(id: models.Vaga)
+POST 	/vagas/           										controllers.Vagas.salvar()
+DELETE 	/vagas/:id        										controllers.Vagas.delete(id: Long)
 
 #Vagas por area
-GET  	/areas/:id/vagas  controllers.Vagas.vagasPorArea(id: models.Area, page: Integer ?= 0)
+GET  	/areas/:id/vagas  										controllers.Vagas.vagasPorArea(id: models.Area, page: Integer ?= 0)
 
 #Candidatos por vaga
-GET  	/vagascandidatos/:id/candidatos	controllers.VagasCandidatos.candidatosPorVaga(id: models.Vaga, page: Integer ?= 0)
-GET  	/vagascandidatos/:id       		controllers.VagasCandidatos.detalhes(id: models.VagaCandidato)
-GET  	/vagascandidatos/novo/			controllers.VagasCandidatos.novo()
-POST 	/vagascandidatos/           	controllers.VagasCandidatos.salvar()
-DELETE 	/vagascandidatos/:id        	controllers.VagasCandidatos.delete(id: Long)
+GET  	/vagascandidatos/:id/candidatos							controllers.VagasCandidatos.candidatosPorVaga(id: models.Vaga, page: Integer ?= 0)
+GET  	/vagascandidatos/vagas/:idVaga/candidatos/:idCandidato	controllers.VagasCandidatos.detalhes(idVaga: Long, idCandidato: Long)
+GET  	/vagascandidatos/novo/:id								controllers.VagasCandidatos.novo(id: models.Vaga)
+POST 	/vagascandidatos/           							controllers.VagasCandidatos.salvar()
+DELETE 	/vagascandidatos/vagas/:idVaga/candidatos/:idCandidato	controllers.VagasCandidatos.delete(idVaga: Long, idCandidato: Long)
