@@ -1,4 +1,31 @@
-@(currentPage: com.avaje.ebean.Page[Situacao])
+@(currentPage: com.avaje.ebean.Page[Situacao], currentSortBy: String, currentOrder: String, currentFilter: String, currentAtribute: String)
+@link(newPage:Int, newSortBy:String) = @{
+    
+    var sortBy = currentSortBy
+    var order = currentOrder
+    
+    if(newSortBy != null) {
+        sortBy = newSortBy
+        if(currentSortBy == newSortBy) {
+            if(currentOrder == "asc") {
+                order = "desc"
+            } else {
+                order = "asc"
+            }
+        } else {
+            order = "asc"
+        }
+    }
+    
+    // Generate the link
+    routes.Situacoes.list(newPage, sortBy, order, currentFilter, currentAtribute)
+    
+}
+@header(key:String, title:String) = {
+    <th class="@key.replace(".","_") header @if(currentSortBy == key) @{if(currentOrder == "asc") "headerSortDown" else "headerSortUp"}">
+        <a href="@link(0, key)">@title</a>
+    </th>
+}
 @main("Status") {
 
   <h2>Status</h2>
@@ -10,15 +37,26 @@
         success: function(results) {
           // Refresh the page
           location.reload();
-        }
+        },
+        error: function (results) {
+            alert("Status não pode ser excluído");
+          }
       });
    }
    </script>
+   <form action="@link(0, "nome")" method="GET">
+       <input type="search" id="searchbox" name="f" value="@currentFilter" placeholder="Filtrar...">
+       <select name="a">
+       		<option value="id" @(if(currentAtribute == "id") "selected=\"selected\"" else "")>ID</option>
+       		<option value="nome" @(if(currentAtribute == "nome") "selected=\"selected\"" else "")>Nome</option>
+       </select>
+       <a id="searchsubmit" href="#" class="btn btn-primary" onclick="document.forms[0].submit();"><i class="glyphicon glyphicon-search">&nbsp;</i>Filtrar</a>
+   </form>
    <table class="table table-striped">
     <thead>
       <tr>
-        <th>ID</th>
-        <th>Nome</th>
+        @header("id","ID")
+        @header("nome","Nome")
         <th></th>
       </tr>
     </thead>
@@ -37,7 +75,7 @@
 		</td>
 		<td>
           <a href="@routes.Situacoes.detalhes(situacao)" class="btn btn-default"><i class="glyphicon glyphicon-pencil">&nbsp;</i>Alterar</a> 
-          <a onclick="javascript:del('@routes.Situacoes.delete(situacao.id)')" class="btn btn-default"><i class="glyphicon glyphicon-trash">&nbsp;</i>Excluir</a> 
+          <a onclick="javascript:if(confirm('Deseja realmente excluir?')) del('@routes.Situacoes.delete(situacao.id)'); else return false"" class="btn btn-danger"><i class="glyphicon glyphicon-trash">&nbsp;</i>Excluir</a> 
         </td>
       </tr>
       }
@@ -46,28 +84,28 @@
    <nav>
 	  <ul class="pagination">
 	  	@if(currentPage.hasPrev) {
-	             <li class="prev">
-	                 <a href="@routes.Situacoes.lista(currentPage.getPageIndex - 1)">&larr; </a>
-	             </li>
-	         } else {
-	             <li class="prev disabled">
-	                 <a>&larr;</a>
-	             </li>
-	         }
-	         <li class="current">
-	             <a>@currentPage.getDisplayXtoYofZ(" - "," / ")</a>
-	         </li>
-	         @if(currentPage.hasNext) {
-	             <li class="next">
-	                 <a href="@routes.Situacoes.lista(currentPage.getPageIndex + 1)"> &rarr;</a>
-	             </li>
-	         } else {
-	             <li class="next disabled">
-	                 <a>&rarr;</a>
-	             </li>
-	         }
+                    <li class="prev">
+                        <a href="@link(currentPage.getPageIndex - 1, null)">&larr; Anterior</a>
+                    </li>
+                } else {
+                    <li class="prev disabled">
+                        <a>&larr; Anterior</a>
+                    </li>
+                }
+                <li class="current">
+                    <a>Exibindo @currentPage.getDisplayXtoYofZ(" a "," de ")</a>
+                </li>
+                @if(currentPage.hasNext) {
+                    <li class="next">
+                        <a href="@link(currentPage.getPageIndex + 1, null)">Próximo &rarr;</a>
+                    </li>
+                } else {
+                    <li class="next disabled">
+                        <a>Próximo &rarr;</a>
+                    </li>
+                }
 	  </ul>
 	</nav>
-   <a href="@routes.Situacoes.novo()" class="btn btn-default">
+   <a href="@routes.Situacoes.novo()" class="btn btn-success">
     <i class="glyphicon glyphicon-plus"></i> Novo status</a>
 }

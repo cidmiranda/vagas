@@ -7,8 +7,8 @@
   <h1>Formulário Vagas</h1>
   @helper.form(action = routes.Vagas.salvar()) {
   <fieldset>
-	  <legend>Vagas (@vagaForm("cargo.nome").valueOr("Novo"))</legend>
-	  @helper.inputText(vagaForm("id"), '_label -> "ID")
+	  <legend>Vagas (@vagaForm("cargo.nome").valueOr("Novo")) área: @Vagas.areaContext.nome</legend>
+	  @helper.inputText(vagaForm("id"), '_label -> "ID", 'readonly -> "readonly")
 	  @select(
                 vagaForm("area.id"), 
                 options(Area.options), 
@@ -37,8 +37,8 @@
       @helper.inputText(vagaForm("remuneracao"), '_label -> "Remuneração")
       @helper.inputDate(vagaForm("dataInicio"), '_label -> "Data Início")
   </fieldset>
-  <input type="submit" class="btn btn-primary" value="Save">
-  <a class="btn" href="@routes.Vagas.lista(0)">Cancel</a>
+  <input type="submit" class="btn btn-success" value="Save">
+  <a class="btn btn-danger" href="@routes.Vagas.vagasPorArea(Vagas.areaContext, 0, "id", "asc", "","cargo.nome")">Cancel</a>
   }
   
 }

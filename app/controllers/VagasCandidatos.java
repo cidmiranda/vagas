@@ -16,16 +16,21 @@ public class VagasCandidatos extends Controller {
 	private static final Form<VagaCandidato> vagaCandidatoForm = Form.form(VagaCandidato.class);
 	public static Vaga vagaContext;
 	
-	public static Result candidatosPorVaga(Vaga vaga, Integer page){
-		Page<VagaCandidato> vagaCandidatos = VagaCandidato.buscarPorVaga(vaga, page);
+	public static Result candidatosPorVaga(Vaga vaga, int page, String sortBy, String order, String filter, String atributo){
+		/*Page<VagaCandidato> vagaCandidatos = VagaCandidato.buscarPorVaga(vaga, page);
 		vagaContext = Vaga.buscarPorId(vaga.id);
-		return ok(views.html.vagascandidatos.list.render(vagaCandidatos));
+		return ok(views.html.vagascandidatos.list.render(vagaCandidatos));*/
+		vagaContext = Vaga.buscarPorId(vaga.id);
+		vaga = vagaContext;
+		return ok(
+        		views.html.vagascandidatos.list.render(
+        		VagaCandidato.page(vaga.id, page, 10, sortBy, order, filter, atributo), vaga,
+                sortBy, order, filter, atributo
+            )
+        );
 	}
 	
 	public static Result novo(Vaga vaga){
-		System.out.println(">>>>>>"+vaga.id);
-		//Form<VagaCandidato> filledForm = vagaCandidatoForm.fill(vagaCandidato);
-		//return ok(views.html.vagascandidatos.detalhes.render(filledForm));
 		VagaCandidato vagaCandidato = new VagaCandidato();
 		vagaContext = Vaga.buscarPorId(vaga.id);
 		vagaCandidato.vaga = vagaContext;
@@ -47,19 +52,15 @@ public class VagasCandidatos extends Controller {
 			    return badRequest(views.html.vagascandidatos.detalhes.render(boundForm));
 			  }
 			  VagaCandidato vagaCandidato = boundForm.get();
-			  System.out.println(">>>>"+vagaCandidato.vaga.id);
-			  System.out.println(">>>>"+vagaCandidato.candidato.id);
 			  vagaCandidato.dataCriacao = new Date();
 			  try  {
-				  System.out.println("save");
 				  vagaCandidato.save();
 			    } catch(RuntimeException re) {
-			    	System.out.println("update");
 			    	vagaCandidato.update();
 			    }
 			flash("success",
 			        String.format("Vaga atualizada %s", vagaCandidato));
-			return redirect(routes.VagasCandidatos.candidatosPorVaga(vagaCandidato.vaga,0));
+			return redirect(routes.VagasCandidatos.candidatosPorVaga(vagaCandidato.vaga, 0, "vaga.area.nome", "asc", "", "vaga.area.nome"));
 		}catch(PersistenceException pe){
 			flash("error",
 			        String.format("Ocorreu um erro: %s", pe.getMessage()));
@@ -70,7 +71,7 @@ public class VagasCandidatos extends Controller {
 		try{
 				VagaCandidato vagaCandidato = VagaCandidato.buscarPorVagaCandidato(idVaga, idCandidato);
 				vagaCandidato.delete();
-				return redirect(routes.VagasCandidatos.candidatosPorVaga(vagaCandidato.vaga,0));
+				return redirect(routes.VagasCandidatos.candidatosPorVaga(vagaCandidato.vaga, 0, "vaga.area.nome", "asc", "", "vaga.area.nome"));
 			}
 		catch(PersistenceException pe){
 			flash("error",

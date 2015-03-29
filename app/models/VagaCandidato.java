@@ -65,7 +65,16 @@ public class VagaCandidato extends Model implements PathBindable<VagaCandidato>,
 	public String toString() {
 		return String.format("%s", vaga.id);
 	}
-	
+	public static Page<VagaCandidato> page(Long id, int page, int pageSize, String sortBy, String order, String filter, String atributo) {
+        return 
+            find.where()
+            	.eq("vaga.id", id)
+                .ilike(atributo, "%" + filter + "%")
+                .orderBy(sortBy + " " + order)
+                .findPagingList(pageSize)
+                .setFetchAhead(false)
+                .getPage(page);
+    }
 	public static Page<VagaCandidato> buscarTodos(int page) {
 	    return find.where()
 	    		//.eq("vaga.id", id)
@@ -134,8 +143,7 @@ public class VagaCandidato extends Model implements PathBindable<VagaCandidato>,
 		update.setParameter("idVaga", this.vaga.id);
 		update.setParameter("idCandidato", this.candidato.id);
 
-		int modifiedCount = Ebean.execute(update); 
-		System.out.println("update override " + modifiedCount);
+		Ebean.execute(update);
 	}
 	
 	@Override
@@ -146,7 +154,6 @@ public class VagaCandidato extends Model implements PathBindable<VagaCandidato>,
 		delete.setParameter("idVaga", this.vaga.id);
 		delete.setParameter("idCandidato", this.candidato.id);
 
-		int modifiedCount = Ebean.execute(delete); 
-		System.out.println("delete override " + modifiedCount);
+		Ebean.execute(delete);
 	}
 }

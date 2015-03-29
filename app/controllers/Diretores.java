@@ -10,10 +10,10 @@ public class Diretores extends Controller{
 
 	private static final Form<Diretor> diretorForm = Form.form(Diretor.class);
 	public static Result GO_HOME = redirect(
-	        routes.Diretores.list(0, "nome", "asc", "", "nome")
+	        routes.Diretores.list(0, "id", "asc", "", "nome")
 	    );
 	public static Result list(int page, String sortBy, String order, String filter, String atributo) {
-        return ok(
+		return ok(
         		views.html.diretores.list.render(
             	Diretor.page(page, 10, sortBy, order, filter, atributo),
                 sortBy, order, filter, atributo
@@ -45,7 +45,7 @@ public class Diretores extends Controller{
 	    }
 		flash("success",
 		        String.format("Diretor atualizado %s", diretor));
-	    return redirect(routes.Diretores.list(0, "nome", "asc", "", "nome"));
+	    return redirect(routes.Diretores.list(0, "id", "asc", "", "nome"));
 	}
 	public static Result delete(Long id) {
 	  final Diretor diretor = Diretor.buscarPorId(id);
@@ -58,6 +58,6 @@ public class Diretores extends Controller{
 	    return badRequest(String.format("Diretor %s não pode ser excluído.", id));
 	  }
 	  diretor.delete();
-	  return redirect(routes.Diretores.list(0, "nome", "asc", "", "nome"));
+	  return redirect(routes.Diretores.list(0, "id", "asc", "", "nome"));
 	}
 }

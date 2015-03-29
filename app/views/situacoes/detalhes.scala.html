@@ -8,11 +8,11 @@
   @helper.form(action = routes.Situacoes.salvar()) {
   <fieldset>  
 	  <legend>Status (@situacaoForm("nome").valueOr("Novo"))</legend>
-	  @helper.inputText(situacaoForm("id"), '_label -> "ID")
+	  @helper.inputText(situacaoForm("id"), '_label -> "ID", 'readonly -> "readonly")
 	  @helper.inputText(situacaoForm("nome"),'_label -> "Nome")
   </fieldset>
-  <input type="submit" class="btn btn-primary" value="Save">
-  <a class="btn" href="@routes.Situacoes.lista(0)">Cancel</a>
+  <input type="submit" class="btn btn-success" value="Save">
+  <a class="btn btn-danger" href="@routes.Situacoes.list(0, "id", "asc", "","nome")">Cancel</a>
   }
 }
       

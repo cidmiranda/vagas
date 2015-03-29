@@ -9,69 +9,65 @@ GET     /                     									controllers.Areas.vagasPorArea(page: Inte
 GET     /assets/*file         									controllers.Assets.at(path="/public", file)
 
 # Diretores
-GET     /diretores/			  									controllers.Diretores.list(p:Int ?= 0, s ?= "nome", o ?= "asc", f ?= "", a ?= "nome")
-#GET  	/diretores/           									controllers.Diretores.lista(page: Integer ?= 0)
+GET     /diretores/			  									controllers.Diretores.list(p:Int ?= 0, s ?= "id", o ?= "asc", f ?= "", a ?= "nome")
 GET  	/diretores/novo       									controllers.Diretores.novo()
 GET  	/diretores/:id        									controllers.Diretores.detalhes(id: models.Diretor)
 POST 	/diretores/           									controllers.Diretores.salvar()
 DELETE 	/diretores/:id        									controllers.Diretores.delete(id: Long)
 
 # Gestores
-GET     /gestores/			  									controllers.Gestores.list(p:Int ?= 0, s ?= "nome", o ?= "asc", f ?= "", a ?= "nome")
-#GET  	/gestores/           									controllers.Gestores.lista(page: Integer ?= 0)
+GET     /gestores/			  									controllers.Gestores.list(p:Int ?= 0, s ?= "id", o ?= "asc", f ?= "", a ?= "nome")
 GET  	/gestores/novo       									controllers.Gestores.novo()
 GET  	/gestores/:id        									controllers.Gestores.detalhes(id: models.Gestor)
 POST 	/gestores/           									controllers.Gestores.salvar()
 DELETE 	/gestores/:id        									controllers.Gestores.delete(id: Long)
 
 # Area
-GET  	/areas/           										controllers.Areas.list(p:Int ?= 0, s ?= "nome", o ?= "asc", f ?= "", a ?= "nome")
-#GET  	/areas/           										controllers.Areas.lista(page: Integer ?= 0)
+GET  	/areas/           										controllers.Areas.list(p:Int ?= 0, s ?= "id", o ?= "asc", f ?= "", a ?= "nome")
 GET  	/areas/novo       										controllers.Areas.novo()
 GET  	/areas/:id        										controllers.Areas.detalhes(id: models.Area)
 POST 	/areas/           										controllers.Areas.salvar()
 DELETE 	/areas/:id        										controllers.Areas.delete(id: Long)
 
 # Cargo
-GET  	/cargos/           										controllers.Cargos.lista(page: Integer ?= 0)
+GET  	/cargos/           										controllers.Cargos.list(p:Int ?= 0, s ?= "id", o ?= "asc", f ?= "", a ?= "nome")
 GET  	/cargos/novo       										controllers.Cargos.novo()
 GET  	/cargos/:id        										controllers.Cargos.detalhes(id: models.Cargo)
 POST 	/cargos/           										controllers.Cargos.salvar()
 DELETE 	/cargos/:id        										controllers.Cargos.delete(id: Long)
 
 # CargosNecessarios
-GET  	/cargosnecessarios/           							controllers.CargosNecessarios.lista(page: Integer ?= 0)
+GET  	/cargosnecessarios/           							controllers.CargosNecessarios.list(p:Int ?= 0, s ?= "id", o ?= "asc", f ?= "", a ?= "nome")
 GET  	/cargosnecessarios/novo       							controllers.CargosNecessarios.novo()
 GET  	/cargosnecessarios/:id        							controllers.CargosNecessarios.detalhes(id: models.CargoNecessario)
 POST 	/cargosnecessarios/           							controllers.CargosNecessarios.salvar()
 DELETE 	/cargosnecessarios/:id        							controllers.CargosNecessarios.delete(id: Long)
 
 # Situacao
-GET  	/situacoes/           									controllers.Situacoes.lista(page: Integer ?= 0)
+GET  	/situacoes/           									controllers.Situacoes.list(p:Int ?= 0, s ?= "id", o ?= "asc", f ?= "", a ?= "nome")
 GET  	/situacoes/novo       									controllers.Situacoes.novo()
 GET  	/situacoes/:id        									controllers.Situacoes.detalhes(id: models.Situacao)
 POST 	/situacoes/           									controllers.Situacoes.salvar()
 DELETE 	/situacoes/:id        									controllers.Situacoes.delete(id: Long)
 
 # Candidato
-GET  	/candidatos/           									controllers.Candidatos.lista(page: Integer ?= 0)
+GET  	/candidatos/           									controllers.Candidatos.list(p:Int ?= 0, s ?= "id", o ?= "asc", f ?= "", a ?= "nome")
 GET  	/candidatos/novo       									controllers.Candidatos.novo()
 GET  	/candidatos/:id        									controllers.Candidatos.detalhes(id: models.Candidato)
 POST 	/candidatos/           									controllers.Candidatos.salvar()
 DELETE 	/candidatos/:id        									controllers.Candidatos.delete(id: Long)
 
 # Vaga
-GET  	/vagas/           										controllers.Vagas.lista(page: Integer ?= 0)
-GET  	/vagas/novo       										controllers.Vagas.novo()
+GET  	/vagas/novo/:id    										controllers.Vagas.novo(id: models.Area)
 GET  	/vagas/:id        										controllers.Vagas.detalhes(id: models.Vaga)
 POST 	/vagas/           										controllers.Vagas.salvar()
 DELETE 	/vagas/:id        										controllers.Vagas.delete(id: Long)
 
 #Vagas por area
-GET  	/areas/:id/vagas  										controllers.Vagas.vagasPorArea(id: models.Area, page: Integer ?= 0)
+GET  	/areas/:id/vagas  										controllers.Vagas.vagasPorArea(id: models.Area, p:Int ?= 0, s ?= "id", o ?= "asc", f ?= "", a ?= "cargo.nome")
 
 #Candidatos por vaga
-GET  	/vagascandidatos/:id/candidatos							controllers.VagasCandidatos.candidatosPorVaga(id: models.Vaga, page: Integer ?= 0)
+GET  	/vagascandidatos/:id/candidatos							controllers.VagasCandidatos.candidatosPorVaga(id: models.Vaga, p:Int ?= 0, s ?= "vaga.area.nome", o ?= "asc", f ?= "", a ?= "vaga.area.nome")
 GET  	/vagascandidatos/vagas/:idVaga/candidatos/:idCandidato	controllers.VagasCandidatos.detalhes(idVaga: Long, idCandidato: Long)
 GET  	/vagascandidatos/novo/:id								controllers.VagasCandidatos.novo(id: models.Vaga)
 POST 	/vagascandidatos/           							controllers.VagasCandidatos.salvar()

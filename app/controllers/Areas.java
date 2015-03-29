@@ -12,7 +12,7 @@ public class Areas extends Controller{
 
 	private static final Form<Area> areaForm = Form.form(Area.class);
 	public static Result GO_HOME = redirect(
-	        routes.Areas.list(0, "nome", "asc", "", "nome")
+	        routes.Areas.list(0, "id", "asc", "", "nome")
 	    );
 	public static Result list(int page, String sortBy, String order, String filter, String atributo) {
         return ok(
@@ -51,7 +51,7 @@ public class Areas extends Controller{
 	    }
 		flash("success",
 		        String.format("Area atualizada %s", area));
-		return redirect(routes.Areas.list(0, "nome", "asc", "", "nome"));
+		return redirect(routes.Areas.list(0, "id", "asc", "", "nome"));
 	}
 	public static Result delete(Long id) {
 	  final Area area = Area.buscarPorId(id);
@@ -63,6 +63,6 @@ public class Areas extends Controller{
 	    return badRequest(String.format("Área %s não pode ser excluída.", id));
 	  }
 	  area.delete();
-	  return redirect(routes.Areas.list(0, "nome", "asc", "", "nome"));
+	  return redirect(routes.Areas.list(0, "id", "asc", "", "nome"));
 	}
 }

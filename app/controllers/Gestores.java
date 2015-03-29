@@ -10,7 +10,7 @@ public class Gestores extends Controller{
 
 	private static final Form<Gestor> gestorForm = Form.form(Gestor.class);
 	public static Result GO_HOME = redirect(
-	        routes.Gestores.list(0, "nome", "asc", "", "nome")
+	        routes.Gestores.list(0, "nome", "asc", "", "")
 	    );
 	public static Result list(int page, String sortBy, String order, String filter, String atributo) {
         return ok(
@@ -48,7 +48,7 @@ public class Gestores extends Controller{
 	    }
 		flash("success",
 		        String.format("Gestor atualizado %s", gestor));
-		return redirect(routes.Gestores.list(0, "nome", "asc", "", "nome"));
+		return redirect(routes.Gestores.list(0, "nome", "asc", "", ""));
 	}
 	public static Result delete(Long id) {
 	  final Gestor gestor = Gestor.buscarPorId(id);
@@ -60,6 +60,6 @@ public class Gestores extends Controller{
 	    return badRequest(String.format("Gestor %s não pode ser excluído.", id));
 	  }
 	  gestor.delete();
-	  return redirect(routes.Gestores.list(0, "nome", "asc", "", "nome"));
+	  return redirect(routes.Gestores.list(0, "nome", "asc", "", ""));
 	}
 }

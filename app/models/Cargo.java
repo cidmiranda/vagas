@@ -33,6 +33,15 @@ public class Cargo extends Model implements PathBindable<Cargo>, QueryStringBind
 	public String toString() {
 		return String.format("%s - %s", id, nome);
 	}
+	public static Page<Cargo> page(int page, int pageSize, String sortBy, String order, String filter, String atributo) {
+        return 
+            find.where()
+                .ilike(atributo, "%" + filter + "%")
+                .orderBy(sortBy + " " + order)
+                .findPagingList(pageSize)
+                .setFetchAhead(false)
+                .getPage(page);
+    }
 	public static Page<Cargo> buscarTodos(int page) {
 	    return find.where()
                 .orderBy("id asc")

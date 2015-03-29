@@ -1,6 +1,8 @@
 package controllers;
 
+import models.Cargo;
 import models.Situacao;
+import models.Vaga;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -9,13 +11,20 @@ import com.avaje.ebean.Page;
 
 public class Situacoes extends Controller {
 	private static final Form<Situacao> situacaoForm = Form.form(Situacao.class);
+	public static Result GO_HOME = redirect(
+	        routes.Situacoes.list(0, "id", "asc", "", "nome")
+	    );
+	public static Result list(int page, String sortBy, String order, String filter, String atributo) {
+        return ok(
+        		views.html.situacoes.list.render(
+        		Situacao.page(page, 10, sortBy, order, filter, atributo),
+                sortBy, order, filter, atributo
+            )
+        );
+    }
 	public static Result index() {
-		return redirect(routes.Situacoes.lista(0));
-	  }
-	public static Result lista(Integer page){
-		Page<Situacao> situacoes = Situacao.buscarTodos(page);
-		return ok(views.html.situacoes.list.render(situacoes));
-	}
+        return GO_HOME;
+    }
 	public static Result novo(){
 		return ok(views.html.situacoes.detalhes.render(situacaoForm));
 	}
@@ -37,14 +46,18 @@ public class Situacoes extends Controller {
 	    }
 		flash("success",
 		        String.format("Situacao atualizada %s", situacao));
-		return redirect(routes.Situacoes.lista(0));
+		return redirect(routes.Situacoes.list(0, "id", "asc", "", "nome"));
 	}
 	public static Result delete(Long id) {
 	  final Situacao situacao = Situacao.buscarPorId(id);
 	  if(situacao == null) {
-		  return ok();
+		  return notFound(String.format("Status com id %s não existe.", id));
+	  }
+	  final Vaga vaga = Vaga.buscarPorSituacao(id);
+	  if(vaga != null) {
+	    return badRequest(String.format("Status %s não pode ser excluído.", id));
 	  }
 	  situacao.delete();
-	  return redirect(routes.Situacoes.lista(0));
+	  return redirect(routes.Situacoes.list(0, "id", "asc", "", "nome"));
 	}
 }

@@ -4,7 +4,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -52,7 +51,15 @@ public class Candidato extends Model implements PathBindable<Candidato>, QuerySt
 	public String toString() {
 		return String.format("%s - %s - %s", id, nome, cpf);
 	}
-	
+	public static Page<Candidato> page(int page, int pageSize, String sortBy, String order, String filter, String atributo) {
+        return 
+            find.where()
+                .ilike(atributo, "%" + filter + "%")
+                .orderBy(sortBy + " " + order)
+                .findPagingList(pageSize)
+                .setFetchAhead(false)
+                .getPage(page);
+    }
 	public static Page<Candidato> buscarTodos(int page) {
 	    return find.where()
                 .orderBy("id asc")

@@ -8,11 +8,11 @@
   @helper.form(action = routes.Cargos.salvar()) {
   <fieldset>
 	  <legend>Cargo (@cargoForm("nome").valueOr("Novo"))</legend>
-	  @helper.inputText(cargoForm("id"), '_label -> "ID")
+	  @helper.inputText(cargoForm("id"), '_label -> "ID", 'readonly -> "readonly")
 	  @helper.inputText(cargoForm("nome"),'_label -> "Nome")
   </fieldset>
-  <input type="submit" class="btn btn-primary" value="Save">
-  <a class="btn" href="@routes.Cargos.lista(0)">Cancel</a>
+  <input type="submit" class="btn btn-success" value="Save">
+  <a class="btn btn-danger" href="@routes.Cargos.list(0, "id", "asc", "","nome")">Cancel</a>
   }
 }
       

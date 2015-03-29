@@ -8,12 +8,12 @@
   @helper.form(action = routes.Candidatos.salvar()) {
   <fieldset>  
 	  <legend>Candidato (@candidatoForm("nome").valueOr("Novo"))</legend>
-	  @helper.inputText(candidatoForm("id"), '_label -> "ID")
+	  @helper.inputText(candidatoForm("id"), '_label -> "ID", 'readonly -> "readonly")
 	  @helper.inputText(candidatoForm("nome"),'_label -> "Nome")
 	  @helper.inputText(candidatoForm("cpf"),'_label -> "CPF")
   </fieldset>
-  <input type="submit" class="btn btn-primary" value="Save">
-  <a class="btn" href="@routes.Candidatos.lista(0)">Cancel</a>
+  <input type="submit" class="btn btn-success" value="Save">
+  <a class="btn btn-danger" href="@routes.Candidatos.list(0, "id", "asc", "","nome")">Cancel</a>
   }
 }
       

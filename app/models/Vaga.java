@@ -31,6 +31,7 @@ import com.avaje.ebean.Page;
 @Table(name = "vaga")
 public class Vaga extends Model implements PathBindable<Vaga>, QueryStringBindable<Vaga>  {
 	public static Finder<Long, Vaga> find = new Finder<Long, Vaga>(Long.class, Vaga.class);
+	public static Finder<Long, VagaCandidato> findCandidato = new Finder<Long, VagaCandidato>(Long.class, VagaCandidato.class);
 	
 	@Id
 	@GeneratedValue
@@ -104,6 +105,16 @@ public class Vaga extends Model implements PathBindable<Vaga>, QueryStringBindab
 	public String toString() {
 		return String.format("%s", id);
 	}
+	public static Page<Vaga> page(Long id, int page, int pageSize, String sortBy, String order, String filter, String atributo) {
+        return 
+            find.where()
+            	.eq("area.id", id)
+                .ilike(atributo, "%" + filter + "%")
+                .orderBy(sortBy + " " + order)
+                .findPagingList(pageSize)
+                .setFetchAhead(false)
+                .getPage(page);
+    }
 	
 	public static Page<Vaga> buscarTodos(int page) {
 	    return find.where()
@@ -120,6 +131,12 @@ public class Vaga extends Model implements PathBindable<Vaga>, QueryStringBindab
 	public static Vaga buscarPorCargo(Long id) {
 		return find.where().eq("cargo.id", id).findUnique();
 	}
+	public static Vaga buscarPorCargoNecessario(Long id) {
+		return find.where().eq("cargoNecessario.id", id).findUnique();
+	}
+	public static Vaga buscarPorSituacao(Long id) {
+		return find.where().eq("status.id", id).findUnique();
+	}
 	public static Page<Vaga> buscarPorArea(Long id, int page) {
 		return find.where()
 	    		.eq("area.id", id)
@@ -130,6 +147,12 @@ public class Vaga extends Model implements PathBindable<Vaga>, QueryStringBindab
 	}
 	public static Vaga buscarPorArea(Long id) {
 		return find.where().eq("area.id", id).findUnique();
+	}
+	public static VagaCandidato buscarPorCandidato(Long id) {
+		return findCandidato.where().eq("candidato.id", id).findUnique();
+	}
+	public static VagaCandidato buscarPorVaga(Long id) {
+		return findCandidato.where().eq("vaga.id", id).findUnique();
 	}
 	@Override
 	public Vaga bind(String key, String value) {

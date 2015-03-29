@@ -1,7 +1,34 @@
-@(currentPage: com.avaje.ebean.Page[Vaga])
+@(currentPage: com.avaje.ebean.Page[Vaga], idArea: models.Area,  currentSortBy: String, currentOrder: String, currentFilter: String, currentAtribute: String)
+@link(newPage:Int, newSortBy:String) = @{
+    
+    var sortBy = currentSortBy
+    var order = currentOrder
+    
+    if(newSortBy != null) {
+        sortBy = newSortBy
+        if(currentSortBy == newSortBy) {
+            if(currentOrder == "asc") {
+                order = "desc"
+            } else {
+                order = "asc"
+            }
+        } else {
+            order = "asc"
+        }
+    }
+    
+    // Generate the link
+    routes.Vagas.vagasPorArea(idArea, newPage, sortBy, order, currentFilter, currentAtribute)
+    
+}
+@header(key:String, title:String) = {
+    <th class="@key.replace(".","_") header @if(currentSortBy == key) @{if(currentOrder == "asc") "headerSortDown" else "headerSortUp"}">
+        <a href="@link(0, key)">@title</a>
+    </th>
+}
 @main("Vagas") {
 
-  <h2>Vagas</h2>
+  <h2>Vagas área: @Vagas.areaContext.nome</h2>
    <script>
    function del(urlToDelete) {
       $.ajax({
@@ -10,17 +37,32 @@
         success: function(results) {
           // Refresh the page
           location.reload();
-        }
+        },
+        error: function (results) {
+            alert("Vaga não pode ser excluída");
+          }
       });
    }
    </script>
+   <form action="@link(0, "nome")" method="GET">
+       <input type="search" id="searchbox" name="f" value="@currentFilter" placeholder="Filtrar...">
+       <select name="a">
+       		<option value="id" @(if(currentAtribute == "id") "selected=\"selected\"" else "")>ID</option>
+       		<option value="area.nome" @(if(currentAtribute == "area.nome") "selected=\"selected\"" else "")>Área</option>
+       		<option value="cargo.nome" @(if(currentAtribute == "cargo.nome") "selected=\"selected\"" else "")>Cargo</option>
+       		<option value="cargoNecessario.nome" @(if(currentAtribute == "cargoNecessario.nome") "selected=\"selected\"" else "")>Cargo necessário</option>
+       		<option value="status.nome" @(if(currentAtribute == "status.nome") "selected=\"selected\"" else "")>Status</option>
+       </select>
+       <a id="searchsubmit" href="#" class="btn btn-primary" onclick="document.forms[0].submit();"><i class="glyphicon glyphicon-search">&nbsp;</i>Filtrar</a>
+   </form>
    <table class="table table-striped">
     <thead>
       <tr>
-        <th>ID</th>
-        <th>Area</th>
-        <th>Cargo</th>
-        <th>Cargo Necessário</th>
+      	@header("id","ID")
+      	@header("area.nome","Àrea")
+      	@header("cargo.nome","Cargo")
+      	@header("cargoNecessario.nome","Cargo necessário")
+      	@header("status.nome","Status")
         <th></th>
       </tr>
     </thead>
@@ -48,9 +90,14 @@
 			</a>
 		</td>
 		<td>
+        	<a href="@routes.Vagas.detalhes(vaga)">
+				@vaga.status.nome
+			</a>
+		</td>
+		<td>
           <a href="@routes.Vagas.detalhes(vaga)" class="btn btn-default"><i class="glyphicon glyphicon-pencil">&nbsp;</i>Alterar</a> 
-          <a onclick="javascript:del('@routes.Vagas.delete(vaga.id)')" class="btn btn-default"><i class="glyphicon glyphicon-trash">&nbsp;</i>Excluir</a>
-          <a href="@routes.VagasCandidatos.candidatosPorVaga(vaga,0)" class="btn btn-default"><i class="glyphicon glyphicon-user">&nbsp;</i>Candidatos</a> 
+          <a onclick="javascript:if(confirm('Deseja realmente excluir?')) del('@routes.Vagas.delete(vaga.id)'); else return false"" class="btn btn-danger"><i class="glyphicon glyphicon-trash">&nbsp;</i>Excluir</a>
+          <a href="@routes.VagasCandidatos.candidatosPorVaga(vaga,0)" class="btn btn-warning"><i class="glyphicon glyphicon-user">&nbsp;</i>Candidatos</a> 
         </td>
       </tr>
       }
@@ -59,29 +106,29 @@
    <nav>
 	  <ul class="pagination">
 	  	@if(currentPage.hasPrev) {
-	             <li class="prev">
-	                 <a href="@routes.Vagas.lista(currentPage.getPageIndex - 1)">&larr; </a>
-	             </li>
-	         } else {
-	             <li class="prev disabled">
-	                 <a>&larr;</a>
-	             </li>
-	         }
-	         <li class="current">
-	             <a>@currentPage.getDisplayXtoYofZ(" - "," / ")</a>
-	         </li>
-	         @if(currentPage.hasNext) {
-	             <li class="next">
-	                 <a href="@routes.Vagas.lista(currentPage.getPageIndex + 1)"> &rarr;</a>
-	             </li>
-	         } else {
-	             <li class="next disabled">
-	                 <a>&rarr;</a>
-	             </li>
-	         }
+                    <li class="prev">
+                        <a href="@link(currentPage.getPageIndex - 1, null)">&larr; Anterior</a>
+                    </li>
+                } else {
+                    <li class="prev disabled">
+                        <a>&larr; Anterior</a>
+                    </li>
+                }
+                <li class="current">
+                    <a>Exibindo @currentPage.getDisplayXtoYofZ(" a "," de ")</a>
+                </li>
+                @if(currentPage.hasNext) {
+                    <li class="next">
+                        <a href="@link(currentPage.getPageIndex + 1, null)">Próximo &rarr;</a>
+                    </li>
+                } else {
+                    <li class="next disabled">
+                        <a>Próximo &rarr;</a>
+                    </li>
+                }
 	  </ul>
 	</nav>
       
-   <a href="@routes.Vagas.novo()" class="btn btn-default">
+   <a href="@routes.Vagas.novo(Vagas.areaContext)" class="btn btn-success">
     <i class="glyphicon glyphicon-plus"></i> Nova vaga</a>
 }
