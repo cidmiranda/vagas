@@ -5,7 +5,7 @@
 
 @main("Formulário Vagas") {
   <h1>Formulário Vagas</h1>
-  @helper.form(action = routes.Vagas.salvar()) {
+  @helper.form(helper.CSRF(routes.Vagas.salvar())) {
   <fieldset>
 	  <legend>Vagas (@vagaForm("cargo.nome").valueOr("Novo")) área: @Vagas.areaContext.nome</legend>
 	  @helper.inputText(vagaForm("id"), '_label -> "ID", 'readonly -> "readonly")

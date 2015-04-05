@@ -12,6 +12,19 @@
      <li><a href="@routes.CargosNecessarios.list(0, "id", "asc", "","nome")">Cargos Necessários</a></li>
      <li><a href="@routes.Situacoes.list(0, "id", "asc", "","nome")">Status</a></li>
      <li><a href="@routes.Candidatos.list(0, "id", "asc", "","nome")">Candidatos</a></li>
+     @if(Http.Context.current().session().get("tipo") == "adm"){
+	     <li>
+	     	<a href="@routes.Usuarios.list(0, "id", "asc", "","email")">Usuários</a>
+	     </li>
+     }
+     <li>
+	     @if(Http.Context.current().session().isEmpty){
+		     	<a href="@routes.Logins.login()"><i class="glyphicon glyphicon-ok-sign">&nbsp;</i>Entrar</a>
+		 }else{
+		     	<a href="@routes.Logins.logoff()"><i class="glyphicon glyphicon-remove-sign">&nbsp;</i>Sair</a>
+	     }
+	 </li>
+     
    </ul></div>
 </div>
 </div>

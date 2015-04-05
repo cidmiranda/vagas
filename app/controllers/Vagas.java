@@ -6,7 +6,9 @@ import models.VagaCandidato;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
+import play.mvc.Security;
 
+@Security.Authenticated(Secured.class)
 public class Vagas extends Controller{
 	private static final Form<Vaga> vagaForm = Form.form(Vaga.class);
 	public static Area areaContext;

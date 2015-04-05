@@ -1,0 +1,25 @@
+@(usuarioForm: Form[Usuario])
+@import helper._
+@import helper.twitterBootstrap._
+@import play.api.libs.functional.syntax._
+
+@main("Formulário Status") {
+  <h1>Formulário Usuário</h1>
+  @helper.form(helper.CSRF(routes.Usuarios.salvar())) {
+  <fieldset>  
+	  <legend>Usuário (@usuarioForm("email").valueOr("Novo"))</legend>
+	  @helper.inputText(usuarioForm("id"), '_label -> "ID", 'readonly -> "readonly")
+	  @helper.inputText(usuarioForm("email"),'_label -> "Email")
+	  @select(
+                usuarioForm("tipo"), 
+                options(Usuario.options), 
+                '_label -> "Tipo de usuário", '_default -> "-- Escolha tipo--",
+                '_showConstraints -> false
+            )
+	  @helper.inputPassword(usuarioForm("senha"),'_label -> "Senha")
+  </fieldset>
+  <input type="submit" class="btn btn-success" value="Save">
+  <a class="btn btn-danger" href="@routes.Usuarios.list(0, "id", "asc", "","email")">Cancel</a>
+  }
+}
+      

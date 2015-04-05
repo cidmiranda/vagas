@@ -49,6 +49,14 @@ create table situacao (
   constraint pk_situacao primary key (id))
 ;
 
+create table usuario (
+  id                        bigint auto_increment not null,
+  email                     varchar(255),
+  senha                     varchar(255),
+  tipo                      varchar(255),
+  constraint pk_usuario primary key (id))
+;
+
 create table vaga (
   id                        bigint auto_increment not null,
   data_abertura             datetime,
@@ -121,6 +129,8 @@ drop table diretor;
 drop table gestor;
 
 drop table situacao;
+
+drop table usuario;
 
 drop table vaga;
 

@@ -5,7 +5,7 @@
 
 @main("Formulário Diretores") {
   <h1>Formulário Diretores</h1>
-  @helper.form(action = routes.Diretores.salvar()) {
+  @helper.form(helper.CSRF(routes.Diretores.salvar())) {
   <fieldset>
 	  <legend>Diretor (@diretorForm("nome").valueOr("Novo"))</legend>
 	  @helper.inputText(diretorForm("id"), '_label -> "ID", 'readonly -> "readonly")

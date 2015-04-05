@@ -5,7 +5,7 @@
 
 @main("Formulário VagaCandidatos") {
   <h1>Formulário VagaCandidatos</h1>
-  @helper.form(action = routes.VagasCandidatos.salvar()) {
+  @helper.form(helper.CSRF(routes.VagasCandidatos.salvar())) {
   <fieldset>
     <legend>VagaCandidatos (@vagacandidatoForm("candidato.id").valueOr("Novo"))</legend>
 	  @select(

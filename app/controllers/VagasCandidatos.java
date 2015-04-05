@@ -9,9 +9,11 @@ import models.VagaCandidato;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
+import play.mvc.Security;
 
 import com.avaje.ebean.Page;
 
+@Security.Authenticated(Secured.class)
 public class VagasCandidatos extends Controller {
 	private static final Form<VagaCandidato> vagaCandidatoForm = Form.form(VagaCandidato.class);
 	public static Vaga vagaContext;

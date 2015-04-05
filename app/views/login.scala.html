@@ -1,0 +1,16 @@
+@(loginForm: Form[Login])
+@import helper._
+@import helper.twitterBootstrap._
+@main("Login")	{
+	@helper.form(helper.CSRF(routes.Logins.authenticate)) {
+		<div class="container">
+			<div class="form-signin">
+				<h2 class="form-signin-heading">Vagas</h2>
+				<input type="email" class="form-control" id="email" name="email" placeholder="Email">
+				<input	type="password" class="form-control" id="senha" name="senha" placeholder="Senha">
+				<button class="btn btn-lg btn-success btn-block" type="submit"><span class="glyphicon glyphicon-log-in">&nbsp;</span> Entrar</button>
+			</div>
+		</div>
+		
+	}
+}

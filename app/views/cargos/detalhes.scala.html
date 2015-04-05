@@ -5,7 +5,7 @@
 
 @main("Formulário Cargos") {
   <h1>Formulário Cargos</h1>
-  @helper.form(action = routes.Cargos.salvar()) {
+  @helper.form(helper.CSRF(routes.Cargos.salvar())) {
   <fieldset>
 	  <legend>Cargo (@cargoForm("nome").valueOr("Novo"))</legend>
 	  @helper.inputText(cargoForm("id"), '_label -> "ID", 'readonly -> "readonly")

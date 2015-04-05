@@ -8,6 +8,10 @@ GET     /                     									controllers.Areas.vagasPorArea(page: Inte
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file         									controllers.Assets.at(path="/public", file)
 
+GET		/login													controllers.Logins.login()
+GET		/logoff													controllers.Logins.logoff()
+POST	/authenticate											controllers.Logins.authenticate()
+
 # Diretores
 GET     /diretores/			  									controllers.Diretores.list(p:Int ?= 0, s ?= "id", o ?= "asc", f ?= "", a ?= "nome")
 GET  	/diretores/novo       									controllers.Diretores.novo()
@@ -72,3 +76,10 @@ GET  	/vagascandidatos/vagas/:idVaga/candidatos/:idCandidato	controllers.VagasCa
 GET  	/vagascandidatos/novo/:id								controllers.VagasCandidatos.novo(id: models.Vaga)
 POST 	/vagascandidatos/           							controllers.VagasCandidatos.salvar()
 DELETE 	/vagascandidatos/vagas/:idVaga/candidatos/:idCandidato	controllers.VagasCandidatos.delete(idVaga: Long, idCandidato: Long)
+
+# Usuario
+GET  	/usuarios/           									controllers.Usuarios.list(p:Int ?= 0, s ?= "id", o ?= "asc", f ?= "", a ?= "email")
+GET  	/usuarios/novo       									controllers.Usuarios.novo()
+GET  	/usuarios/:id        									controllers.Usuarios.detalhes(id: models.Usuario)
+POST 	/usuarios/           									controllers.Usuarios.salvar()
+DELETE 	/usuarios/:id        									controllers.Usuarios.delete(id: Long)

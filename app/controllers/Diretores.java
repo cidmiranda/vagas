@@ -5,7 +5,9 @@ import models.Diretor;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
+import play.mvc.Security;
 
+@Security.Authenticated(Secured.class)
 public class Diretores extends Controller{
 
 	private static final Form<Diretor> diretorForm = Form.form(Diretor.class);

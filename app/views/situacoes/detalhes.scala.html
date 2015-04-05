@@ -5,7 +5,7 @@
 
 @main("Formulário Status") {
   <h1>Formulário Status</h1>
-  @helper.form(action = routes.Situacoes.salvar()) {
+  @helper.form(helper.CSRF(routes.Situacoes.salvar())) {
   <fieldset>  
 	  <legend>Status (@situacaoForm("nome").valueOr("Novo"))</legend>
 	  @helper.inputText(situacaoForm("id"), '_label -> "ID", 'readonly -> "readonly")

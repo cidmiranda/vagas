@@ -5,7 +5,7 @@
 
 @main("Formulário Gestores") {
   <h1>Formulário Gestores</h1>
-  @helper.form(action = routes.Gestores.salvar()) {
+  @helper.form(helper.CSRF(routes.Gestores.salvar())) {
   <fieldset>  
 	  <legend>Gestor (@gestorForm("nome").valueOr("Novo"))</legend>
 	  @helper.inputText(gestorForm("id"), '_label -> "ID", 'readonly -> "readonly")

@@ -6,9 +6,11 @@ import models.Vaga;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
+import play.mvc.Security;
 
 import com.avaje.ebean.Page;
 
+@Security.Authenticated(Secured.class)
 public class CargosNecessarios extends Controller{
 	private static final Form<CargoNecessario> cargoForm = Form.form(CargoNecessario.class);
 	public static Result GO_HOME = redirect(
