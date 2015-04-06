@@ -18,11 +18,11 @@
 	     </li>
      }
      <li>
-	     @if(Http.Context.current().session().isEmpty){
-		     	<a href="@routes.Logins.login()"><i class="glyphicon glyphicon-ok-sign">&nbsp;</i>Entrar</a>
-		 }else{
-		     	<a href="@routes.Logins.logoff()"><i class="glyphicon glyphicon-remove-sign">&nbsp;</i>Sair</a>
-	     }
+     @if(Http.Context.current().session().get("tipo")==null){
+	     	<a href="@routes.Logins.login()"><i class="glyphicon glyphicon-ok-sign">&nbsp;</i>Entrar</a>
+	 }else{
+	     	<a href="@routes.Logins.logoff()"><i class="glyphicon glyphicon-remove-sign">&nbsp;</i>Sair</a>
+     }
 	 </li>
      
    </ul></div>
