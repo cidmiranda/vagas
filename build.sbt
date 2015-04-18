@@ -13,5 +13,6 @@ libraryDependencies ++= Seq(
   javaWs,
   filters,
   "mysql" % "mysql-connector-java" % "5.1.27",
+  "org.xerial" % "sqlite-jdbc" % "3.8.7",
   "com.google.guava" % "guava" % "14.0"
 )
